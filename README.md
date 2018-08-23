@@ -1,2 +1,2 @@
 # gasnet-atk
-Web application fot office stationery borrowing in Gasnet PGASCOM
+Web application for office stationery borrowing in Gasnet PGASCOM
