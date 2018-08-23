@@ -26,7 +26,7 @@
         		</script>
 				<?php unset($_SESSION['success']) ?>
         	<?php endif ?>
-        	<form action="<?php echo base_url() ?>home/login" class="needs-validation" method="post">
+        	<form action="<?php echo base_url() ?>home/login/" class="needs-validation" method="post">
 			  	<div class="form-group">
 			    	<label for="exampleInputEmail1">Email</label>
 			    	<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Email" required>			    	
