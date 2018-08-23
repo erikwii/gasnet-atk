@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f8f9fa;">
   	<a href="<?php echo base_url() ?>" class="navbar-brand">
     	<img src="<?php echo base_url() ?>assets/img/gasnet.png" width="60" height="35" class="d-inline-block align-top" alt="logo">
-    	<span class="text-success">GO!</span>
+    	<span class="text-danger">ATK</span>
   	</a>
   	<?php if (isset($_SESSION['go_email'])): ?>
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

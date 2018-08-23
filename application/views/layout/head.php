@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="<?php echo base_url('assets/img/gasnet.png')?>"/>
 	<title><?php echo $title ?></title>
-    <meta name="description" content="Sistem informasi permohonan kendaraan operasional Gasnet PGASCOM">
+    <meta name="description" content="Sistem informasi Alat Tulis Kantor Gasnet PGASCOM">
 
     <!-- font awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">

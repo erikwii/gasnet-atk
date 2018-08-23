@@ -12,7 +12,7 @@ class Home extends CI_Controller {
 	{
 		$this->check_auth();
 		$data = array(
-            'title'=> 'GasnetGo! - Login',
+            'title'=> 'Gasnet - ATK! - Login',
             'nav' => 'nav.php',
             'isi' => 'pages/home',
             'nav_active' => ''
