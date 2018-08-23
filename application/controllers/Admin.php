@@ -139,7 +139,7 @@ class Admin extends CI_Controller {
 		$noPol = $this->input->post('noPol');
 		$pengemudi = $this->input->post('pengemudi');
 		$tanggalPermohonan = date('d-m-Y');
-		$email = $_SESSION['go_email'];
+		$email = $_SESSION['atk_email'];
 		
 		$data = array(
 			'tanggalBerangkat' => $tanggalBerangkat,
@@ -236,8 +236,8 @@ class Admin extends CI_Controller {
 
 	public function auth()
 	{
-		if (($_SESSION['go_level'] != 0 && $_SESSION['go_level'] != 3) || !isset($_SESSION['go_email']) ) {
-			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['go_level'];
+		if (($_SESSION['atk_level'] != 0 && $_SESSION['atk_level'] != 3) || !isset($_SESSION['atk_email']) ) {
+			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['atk_level'];
 			redirect(base_url()."home/");
 		}
 	}

@@ -55,9 +55,9 @@ class Home extends CI_Controller {
                 $level = $this->home_model->get_users_level($email);
 
                 if(password_verify($password, $db_pass)){
-                    $this->session->set_userdata('go_email', $email);
-                    $this->session->set_userdata('go_password', $password);
-                    $this->session->set_userdata('go_level', $level);
+                    $this->session->set_userdata('atk_email', $email);
+                    $this->session->set_userdata('atk_password', $password);
+                    $this->session->set_userdata('atk_level', $level);
 
                     $_SESSION['success'] = ["Berhasil Login!","Selamat datang kembali di GasnetGo, ".$name];
 
@@ -67,15 +67,15 @@ class Home extends CI_Controller {
 
                         redirect($goto);
                     } else {
-                        if ($_SESSION['go_level'] == 0 || $_SESSION['go_level'] == 3)
+                        if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3)
                         {
                             redirect(base_url()."admin");
                         }
-                        elseif ($_SESSION['go_level'] == 1)
+                        elseif ($_SESSION['atk_level'] == 1)
                         {
                             redirect(base_url()."permohonan");
                         }
-                        elseif ($_SESSION['go_level'] == 2)
+                        elseif ($_SESSION['atk_level'] == 2)
                         {
                             redirect(base_url()."spv");
                         }
@@ -91,11 +91,11 @@ class Home extends CI_Controller {
 
 	function logout()
     {   
-        if( $this->session->has_userdata('go_email')){
+        if( $this->session->has_userdata('atk_email')){
             unset(
-                $_SESSION['go_email'],
-                $_SESSION['go_password'],
-                $_SESSION['go_level']
+                $_SESSION['atk_email'],
+                $_SESSION['atk_password'],
+                $_SESSION['atk_level']
             );
             $this->session->sess_destroy();
         }
@@ -103,13 +103,13 @@ class Home extends CI_Controller {
         redirect(base_url());
     }
 
-    // user authentication based on session 'go_level'
+    // user authentication based on session 'atk_level'
     public function check_auth()
     {
-        if (isset($_SESSION['go_level'])) {
-            if ($_SESSION['go_level'] == 0 || $_SESSION['go_level'] == 3) {
+        if (isset($_SESSION['atk_level'])) {
+            if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3) {
                 redirect(base_url()."admin/");
-            }elseif($_SESSION['go_level'] == 2){
+            }elseif($_SESSION['atk_level'] == 2){
                 redirect(base_url()."spv/");
             }else{
                 redirect(base_url()."permohonan/");

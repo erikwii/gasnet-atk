@@ -3,7 +3,8 @@
 <!-- HAYO MAU NGAPAIN NGINTIP-NGINTIP ?? ^^, -->
 <!-- BELAJAR YANG RAJIN YA !! -->
 <!-- #MayTheCodeBuiltinYou -->
-<!-- <> with ❤ by Erik si anak magang-->
+<!-- <> with ❤ by Erik Santiago si anak magang-->
+<!-- https://github.com/erikwii -->
 <!-- ga usah bilang-bilang abis liat ini ^^, -->
 <head>
 	<meta charset="utf-8">
