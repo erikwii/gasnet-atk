@@ -35,7 +35,8 @@
 			    	<label for="exampleInputPassword1">Password</label>
 			    	<input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Your Password" required>
 			  	</div>
-			  	<button type="submit" class="btn btn-primary">Login</button>			  	
+			  	<button type="submit" class="btn btn-block btn-primary mb-2">Login</button>
+			  	atau isi form permintaan <a href="<?php echo base_url('permintaan') ?>">di sini</a>
 			</form>
         </div>
     </div>

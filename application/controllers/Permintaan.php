@@ -11,8 +11,6 @@ class Permintaan extends CI_Controller {
 
 	public function index()
 	{
-		$this->auth();
-
 		$data = array(
             'title'=> 'Gasnet ATK - Permintaan ATK',
             'nav' => 'nav.php',
@@ -44,8 +42,6 @@ class Permintaan extends CI_Controller {
 
 	public function tambah()
 	{
-		$this->auth();
-
 		$namaKaryawan = $this->input->post('namaKaryawan');
 		$IDbarang = $this->input->post('IDbarang');
 		$jumlah = $this->input->post('jumlah');
@@ -69,7 +65,11 @@ class Permintaan extends CI_Controller {
 
         $_SESSION['success'] = ['Berhasil!','Data permintaan barang berhasil direkam. :)'];
         
-		redirect(base_url().'permintaan/data/');
+        if (isset($_SESSION['atk_email'])) {
+        	redirect(base_url().'permintaan/data/');
+        } else {
+        	redirect(base_url().'permintaan/');
+        }
 	}
 
 	public function edit()

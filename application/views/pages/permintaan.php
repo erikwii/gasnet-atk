@@ -1,4 +1,7 @@
 <div class="container form-app">
+	<?php if (!isset($_SESSION['atk_email'])): ?>
+		<a href="<?php echo base_url() ?>"><i class="fa fa-arrow-left"></i> Login</a>
+	<?php endif ?>
 	<div class="row my-3">
         <div class="col-12 offset-lg-3 col-lg-6 col-md-12">
         	<?php if (isset($_SESSION['error'])): ?>
