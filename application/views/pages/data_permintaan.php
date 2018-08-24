@@ -37,20 +37,19 @@
 				  	<?php $i = 1; ?>
 				  	<?php foreach ($permintaan as $p): ?>
 				  		<?php 
-				  			$timestamp = strtotime($p->tanggalBerangkat);
+				  			$timestamp = strtotime($p->tanggal);
 							$day = date('D', $timestamp);
 				  		?>
 				  		<tr>
 					      <th scope="row"><?php echo $i ?></th>
-					      <td><?php echo $this->home_model->tranlate_day_to_indo($day)."/".$this->home_model->read_date($p->tanggalBerangkat) ?></td>
+					      <td><?php echo $this->home_model->tranlate_day_to_indo($day)."/".$this->home_model->read_date($p->tanggal) ?></td>
 					      <td><?php echo $p->namaKaryawan ?></td>
 					      <td><?php echo $p->namaBarang ?></td>
 					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-primary" onclick="lihat_permohonan(<?php echo $p->IDpermohonan ?>)">Lihat Lengkap</button>
-					      		<button class="btn btn-sm btn-warning" onclick="edit_permohonan(<?php echo $p->IDpermohonan ?>)">Edit</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermohonan ?>)'>Hapus</button>
+					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDpermintaan ?>)">Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermintaan ?>)'>Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>
@@ -74,13 +73,7 @@
 	      		</div>
 	      		<div class="modal-body">
 	      			<?php $attributes = array('class' => 'needs-validation', 'id'=>'editform'); ?>
-	      			<?php if ($_SESSION['go_level'] == 1): ?>
-	      				<?php echo form_open_multipart('permohonan/edit_permohonan/', $attributes);?>
-	      			<?php elseif ($_SESSION['go_level'] == 2): ?>
-	      				<?php echo form_open_multipart('spv/edit_permohonan/', $attributes);?>
-	      			<?php else: ?>
-						<?php echo form_open_multipart('admin/edit_permohonan/', $attributes);?>
-	      			<?php endif ?>
+	      			<?php echo form_open_multipart('permintaan/edit/', $attributes);?>
 					  	<div class="form-row">
 					  		<input type="number" name="IDpermohonan" class="d-none">
 					    	<div class="form-group col-md-5">
@@ -137,7 +130,7 @@
 						    	<input type="text" class="form-control" id="editpengemudi" name="editpengemudi" placeholder="Nama Pengemudi"  />
 						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
 						  	</div>
-						<?php if ($_SESSION['go_level'] == 0 || $_SESSION['go_level'] == 3): ?>
+						<?php if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3): ?>
 						  	<div class="form-group col-md-3">
 						    	<label for="editkmAwal">KM Awal</label>
 						    	<input type="number" class="form-control" id="editkmAwal" name="editkmAwal" list="satuan" placeholder="KM Awal"  />

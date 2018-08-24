@@ -36,20 +36,15 @@
 				  <tbody>
 				  	<?php $i = 1; ?>
 				  	<?php foreach ($barang as $p): ?>
-				  		<?php 
-				  			$timestamp = strtotime($p->tanggalBerangkat);
-							$day = date('D', $timestamp);
-				  		?>
 				  		<tr>
 					      <th scope="row"><?php echo $i ?></th>
 					      <td><?php echo $p->namaBarang ?></td>
 					      <td><?php echo $p->tipeBarang ?></td>
-					      <td><?php echo $p->jumlah ?></td>
+					      <td><?php echo $p->jumlahBarang ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-primary" onclick="lihat_permohonan(<?php echo $p->IDpermohonan ?>)">Lihat Lengkap</button>
-					      		<button class="btn btn-sm btn-warning" onclick="edit_permohonan(<?php echo $p->IDpermohonan ?>)">Edit</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermohonan ?>)'>Hapus</button>
+					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDbarang ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDbarang ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>
@@ -69,62 +64,49 @@
 	  	<div class="modal-dialog modal-dialog-centered" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title" id="exampleModalCenterTitle">Tambah Akun</h5>
+	        		<h5 class="modal-title" id="exampleModalCenterTitle">Tambah Barang</h5>
 	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          			<span aria-hidden="true">&times;</span>
 	        		</button>
 	      		</div>
 	      		<div class="modal-body">
 	      			<?php $attributes = array('class' => 'needs-validation'); ?>
-	      			<?php echo form_open_multipart('admin/tambah_akun/', $attributes);?>
+	      			<?php echo form_open_multipart('barang/tambah/', $attributes);?>
 					  	<div class="form-row">
 					    	<div class="form-group col-md-12">
-					      		<label for="nama">Nama Lengkap</label>
+					      		<label for="nama">Nama Barang</label>
 					      		<div class="input-group">
-					      			<input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" required>
+					      			<input type="text" class="form-control" id="nama" name="namaBarang" placeholder="Nama Barang" required>
 					      			<div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-user"></i></span>
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-cube"></i></span>
 									</div>
 					      		</div>
-					      		<div class="invalid-feedback">Anda harus mengisi Nama Lengkap</div>
+					      		<div class="invalid-feedback">Anda harus mengisi Nama Barang</div>
 					    	</div>
 					  	</div>
 					  	<div class="form-row">
-					  		<div class="form-group col-md-12">
-					  			<label for="email">Email</label>
+					  		<div class="form-group col-md-6">
+					  			<label for="email">Tipe Barang</label>
 					  			<div class="input-group">
-								    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+								    <input type="text" class="form-control" id="email" name="tipeBarang" placeholder="Tipe Barang" list="tipe" required>
+								    <?php $tipe = $this->home_model->get_barang_column('tipeBarang') ?>
+								    <datalist id="tipe">
+								    	<?php foreach ($tipe as $t): ?>
+								    		<option value="<?php echo $t->tipeBarang ?>"><?php echo $t->tipeBarang ?></option>
+								    	<?php endforeach ?>
+								    </datalist>
 								    <div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-envelope-o"></i></span>
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-tag"></i></span>
 									</div>
 					  			</div>
-							    <div class="invalid-feedback">Format Email tidak benar</div>
 							</div>
-					  		<div class="form-group col-md-12">
-					  			<label for="password">Password</label>
+					  		<div class="form-group col-md-6">
+					  			<label for="password">Jumlah</label>
 					  			<div class="input-group">
-					  				<input type="password" class="form-control" id="password" name="password" placeholder="Password" minlength="6" required>
-								    <div class="input-group-append">
-								        <span class="input-group-text"><span class="fa fa-lock"></span></span>
-								    </div>
+					  				<input type="number" class="form-control" id="password" name="jumlahBarang" placeholder="Jumlah" min="1" required>
 					  			</div>
 							    <div class="invalid-feedback">Anda harus mengisi Password</div>
 							</div>
-							<div class="form-group col-md-6">
-					      		<label for="posisi">Posisi</label>
-					      		<input type="text" id="posisi" name="posisi" class="form-control" placeholder="Posisi" required/>
-					      		<div class="invalid-feedback">Anda harus mengisi Posisi</div>
-					    	</div>
-							<div class="form-group col-md-6">
-						    	<label for="level">Level</label>
-						    	<select name="level" id="level" class="form-control">
-						    		<option value="1" selected disabled>Pilih</option>
-						    		<option value="1">User</option>
-						    		<option value="2">Approval</option>
-						    		<option value="3">Admin</option>
-						    	</select>
-						    	<div class="invalid-feedback">Anda harus memilih Level</div>
-						  	</div>
 					  	</div>
 					  	<button type="submit" class="btn btn-lg btn-block btn-primary">Tambah</button>
 					</form>

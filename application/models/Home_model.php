@@ -42,10 +42,10 @@ class Home_model extends CI_Model{
 		return $query = $this->db->get()->num_rows();
 	}
 
-	public function get_barang($IDbarang=null)
+	public function get_barang($where=null)
 	{
-		if (isset($IDbarang)) {
-			return $this->db->get_where('barang', array('IDbarang'=>$IDbarang))->result();
+		if (isset($where)) {
+			return $this->db->get_where('barang', $where)->result();
 		}else{
 			return $this->db->get('barang')->result();
 		}
@@ -59,6 +59,13 @@ class Home_model extends CI_Model{
 		} else {
 			return false;
 		}
+	}
+
+	public function get_barang_column($select)
+	{
+		$this->db->distinct();
+		$this->db->select($select);
+		return $this->db->get('barang')->result();
 	}
 	
 	public function read_date($tanggal){

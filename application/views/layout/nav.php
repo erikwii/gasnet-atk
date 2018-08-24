@@ -11,7 +11,7 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 		    <ul class="navbar-nav my-lg-0 ml-auto">
 		    	<?php if (isset($_SESSION['atk_email'])): ?>
-		    		<?php if (isset($nav_active) && $nav_active == 'permohonan'): ?>
+		    		<?php if (isset($nav_active) && $nav_active == 'permintaan'): ?>
 						<li class="nav-item active">
 					       	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>permintaan/"><i class="fa fa-file-text-o"></i> Form Permintaan</a></b>
 					    </li>

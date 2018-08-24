@@ -36,73 +36,25 @@ class Permintaan extends CI_Controller {
         $this->load->view('layout/wrapper',$data);
 	}
 
-	public function tambah_permohonan()
+	public function tambah()
 	{
 		$this->auth();
 
-		$tanggalBerangkat = $this->input->post('tanggalBerangkat');
-		$namaPengguna = $this->input->post('namaPengguna');
-		$satuanKerja = $this->input->post('satuanKerja');
-		$tujuan = $this->input->post('tujuan');
-		$jamBerangkat = $this->input->post('jamBerangkat');
-		$jamKembali = $this->input->post('jamKembali');
-		$noPol = $this->input->post('noPol');
-		$pengemudi = $this->input->post('pengemudi');
-		$tanggalPermohonan = date('Y-m-d');
-		$email = $_SESSION['atk_email'];
+		$namaKaryawan = $this->input->post('namaKaryawan');
+		$IDbarang = $this->input->post('IDbarang');
+		$jumlah = $this->input->post('jumlah');
 		
 		$data = array(
-			'tanggalBerangkat' => $tanggalBerangkat,
-			'namaPengguna' => $namaPengguna,
-			'satuanKerja' => $satuanKerja,
-			'tujuan' => $tujuan,
-			'jamBerangkat' => $jamBerangkat,
-			'jamKembali' => $jamKembali,
-			'noPol' => $noPol,
-			'pengemudi' => $pengemudi,
-			'tanggalPermohonan' => $tanggalPermohonan,
-			'permohonan_kendaraan.email' => $email
+			'namaKaryawan' => $namaKaryawan,
+			'IDbarang' => $IDbarang,
+			'jumlah' => $jumlah,
+			'tanggal' => date('Y-m-d')
 		);
-		$this->db->insert('permohonan_kendaraan',$data);
+		$this->db->insert('permintaan_barang',$data);
 
-		$IDpermohonan = $this->admin_model->get_permohonan_data($data)['IDpermohonan'];
-		$SPVemail = $this->input->post('emailspv');
-
-		$config = Array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'gasnet.dummy@gmail.com',
-            'smtp_pass' => 'passwordgasnet',
-            'mailtype'  => 'html', 
-            'charset'   => 'utf-8'
-        );
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-
-        $this->email->from('no-reply@go.gasnet.id', 'Gasnet-doNotReply');
-        $this->email->reply_to('no-reply@go.gasnet.id', 'Gasnet-doNotReply');
-        $this->email->to($SPVemail);
-
-        $user = $this->home_model->get_users_data($email);
-        $content = array(
-        	'title' => 'Permohonan Kendaraan Operasional',
-        	'preheader' => $user->nama.' dari bagian '.$user->posisi.' mengirimkan permohonan kendaraan operasional.',
-        	'nama' => $user->nama,
-        	'data' => $data,
-        	'IDpermohonan' => $IDpermohonan
-        );
-        $msg = $this->load->view('pages/email',$content,true);
-        $this->email->subject('[GasnetGo] Permohonan kendaraan operasional');
-        $this->email->message($msg);
-
-        if ($this->email->send()) {
-            $_SESSION['success'] = ['Berhasil!','Permohonan dan email berhasil dikirim ke supervisor.'];
-        }else{
-            $_SESSION['error'] = 'gagal Mengirim email';
-        }
+        $_SESSION['success'] = ['Berhasil!','Data permintaan barang berhasil direkam. :)'];
         
-		redirect(base_url().'permohonan/');
+		redirect(base_url().'permintaan/data/');
 	}
 
 	public function edit_permohonan()

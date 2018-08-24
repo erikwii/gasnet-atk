@@ -18,7 +18,7 @@ class Barang extends CI_Controller {
             'nav' => 'nav.php',
             'isi' => 'pages/data_barang',
             'barang' => $this->home_model->get_barang(),
-            'nav_active' => 'data'
+            'nav_active' => 'barang'
         );
         $this->load->view('layout/wrapper',$data);
 	}
@@ -37,40 +37,29 @@ class Barang extends CI_Controller {
         $this->load->view('layout/wrapper',$data);
 	}
 
-	public function data_akun($email)
+	public function data($email)
 	{
-		$data = $this->admin_model->get_akun(array('email' => $email));
+		$data = $this->home_model->get_barang(array('email' => $email));
 		echo json_encode($data);
 	}
 
-	public function tambah_akun()
+	public function tambah()
 	{
 		$this->auth();
 
-		$nama = $this->input->post('nama');
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
-		$posisi = $this->input->post('posisi');
-		$level = $this->input->post('level');
-
-		$check = $this->home_model->is_UserExist($email);
-		if ($check > 0) {
-			$_SESSION['error'] = $email." telah digunakan! Silahkan gunakan email lain";
-			redirect(base_url()."admin/akun/");
-		}
+		$namaBarang = $this->input->post('namaBarang');
+		$tipeBarang = $this->input->post('tipeBarang');
+		$jumlahBarang = $this->input->post('jumlahBarang');
 
 		$data = array(
-			'nama' => $nama,
-			'email' => $email,
-			'password'	=> password_hash($password, PASSWORD_DEFAULT),
-			'posisi' => $posisi,
-			'level' => $level,
-			'status' => 'aktif',
+			'namaBarang' => $namaBarang,
+			'tipeBarang' => $tipeBarang,
+			'jumlahBarang'	=> $jumlahBarang
 		);
-		$this->db->insert('users',$data);
+		$this->db->insert('barang',$data);
 
-		$_SESSION['success'] = ['Berhasil!','Akun '.$nama.' berhasil ditambahkan :)'];
-		redirect(base_url()."admin/akun");
+		$_SESSION['success'] = ['Berhasil!','Barang '.$namaBarang.' berhasil ditambahkan :)'];
+		redirect(base_url()."barang");
 	}
 
 	public function edit_akun()
