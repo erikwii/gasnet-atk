@@ -49,6 +49,7 @@
 					      <td>
 					      	<div class="btn-group">
 					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permintaan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-success" onclick='batalkan_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-refresh"></i> Batalkan</button>
 					      		<button class="btn btn-sm btn-danger" onclick='hapus_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
 					      	</div>
 					      </td>
@@ -115,147 +116,8 @@
 	  	</div>
 	</div>
 	<!-- Edit Modal -->
-
-	<!-- Lihat Modal -->
-	<div class="modal fade" id="lihatModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	  	<div class="modal-dialog modal-dialog-centered" role="document">
-	    	<div class="modal-content">
-	      		<div class="modal-header bg-primary text-white">
-	        		<h5 class="modal-title" id="exampleModalCenterTitle">Data Permohonan <span id="tgldata"></span></h5>
-	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          			<span aria-hidden="true">&times;</span>
-	        		</button>
-	      		</div>
-	      		<div class="modal-body">
-	      			<form id="lihatform">
-	      				<div class="form-group">
-					  		<label for="lihatnama">Nama Pemohon</label>
-					    	<input type="text" class="form-control" id="lihatnama" name="lihatnama" placeholder="Nama Pemohon" readonly>
-					    	<div class="invalid-feedback">Anda harus menyertakan lokasi</div>
-					  	</div>
-					  	<div class="form-row">
-					    	<div class="form-group col-md-5">
-					      		<label for="lihattanggalBerangkat">Tgl. Keberangkatan</label>
-					      		<div class="input-group">
-					      			<input type="text" class="form-control" id="lihattanggalBerangkat" name="lihattanggalBerangkat" placeholder="Tgl. Keberangkatan" readonly>
-					      			<div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
-									</div>
-					      		</div>
-					      		<div class="invalid-feedback">Anda harus mengisi Tanggal Keberangkatan</div>
-					    	</div>
-					    	<div class="form-group col-md-7">
-					      		<label for="lihatnamaPengguna">Nama Pengguna</label>
-					      		<input id="lihatnamaPengguna" name="lihatnamaPengguna" class="form-control" placeholder="Nama Pengguna" readonly />
-					      		<div class="invalid-feedback">Anda harus mengisi Nama Pengguna</div>
-					    	</div>
-					  	</div>
-					  	<div class="form-row">
-					  		<div class="form-group col-md-4">
-					  			<label for="lihatjamBerangkat">Jam Berangkat</label>
-					  			<div class="input-group">
-								    <input type="text" class="form-control" id="lihatjamBerangkat" name="lihatjamBerangkat" placeholder="Berangkat" readonly>
-								    <div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-clock-o"></i></span>
-									</div>
-					  			</div>
-							    <div class="invalid-feedback">Anda harus mengisi Jam Berangkat</div>
-							</div>
-					  		<div class="form-group col-md-4">
-					  			<label for="lihatjamKembali">Jam Kembali</label>
-					  			<div class="input-group">
-					  				<input type="text" class="form-control" id="lihatjamKembali" name="lihatjamKembali
-								    " placeholder="Kembali" readonly>
-								    <div class="input-group-append">
-								        <span class="input-group-text"><span class="fa fa-clock-o"></span></span>
-								    </div>
-					  			</div>
-							    <div class="invalid-feedback">Anda harus mengisi Jam Kembali</div>
-							</div>
-							<div class="form-group col-md-4">
-						    	<label for="lihatnoPol">No. Polisi</label>
-						    	<input type="text" class="form-control" id="lihatnoPol" name="lihatnoPol" placeholder='No. Pol' readonly />
-						    	<div class="invalid-feedback">Anda harus mengisi Tujuan</div>
-						  	</div>
-					  	</div>
-					  	<div class="form-row">
-					  		<div class="form-group col-md-6">
-						    	<label for="lihatsatuanKerja">Satuan Kerja</label>
-						    	<input type="text" class="form-control" id="lihatsatuanKerja" name="lihatsatuanKerja" list="satuan" placeholder="Satuan Kerja" readonly />
-						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="lihatpengemudi">Nama Pengemudi</label>
-						    	<input type="text" class="form-control" id="lihatpengemudi" name="lihatpengemudi" placeholder="Nama Pengemudi" readonly />
-						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
-						  	</div>
-						  	<div class="form-group col-md-3">
-						    	<label for="lihatkmAwal">KM Awal</label>
-						    	<input type="number" class="form-control" id="lihatkmAwal" name="lihatkmAwal" list="satuan" placeholder="KM Awal" readonly/>
-						  	</div>
-						  	<div class="form-group col-md-3">
-						    	<label for="lihatkmAkhir">KM Akhir</label>
-						    	<input type="number" class="form-control" id="lihatkmAkhir" name="lihatkmAkhir" placeholder="KM Akhir" readonly />
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="lihatpersekot">Persekot</label>
-						    	<div class="input-group">
-							    	<div class="input-group-prepend">
-								        <span class="input-group-text">Rp.</span>
-								    </div>
-							    	<input type="number" class="form-control" id="lihatpersekot" name="lihatpersekot" placeholder="Persekot" readonly />
-						    	</div>
-						  	</div>
-					  	</div>
-					  	<div class="form-group">
-					  		<label for="lihattujuan">Tujuan</label>
-					    	<textarea class="form-control" id="lihattujuan" name="lihattujuan" placeholder="Lokasi Tujuan" readonly></textarea>
-					    	<div class="invalid-feedback">Anda harus menyertakan lokasi</div>
-					  	</div>
-					</form>
-	      		</div>
-	    	</div>
-	  	</div>
-	</div>
-	<!-- Lihat Modal -->
 </div>
 <script>
-
-	$('.datepicker').datepicker({
-	    format: 'dd/mm/yyyy',
-	    startDate: '-3d',
-	    todayHighlight: true,
-	    language: 'id',
-	    autoclose: true
-	});
-
-	$('#berangkat').clockpicker({
-		autoclose: true,
-	    placement: 'bottom',
-	    align: 'left',
-	    donetext: 'Ok'
-	});
-
-	$('#kembali').clockpicker({
-		autoclose: true,
-	    placement: 'bottom',
-	    align: 'left',
-	    donetext: 'Ok'
-	});
-
-	$('#editberangkat').clockpicker({
-		autoclose: true,
-	    placement: 'bottom',
-	    align: 'left',
-	    donetext: 'Ok'
-	});
-
-	$('#editkembali').clockpicker({
-		autoclose: true,
-	    placement: 'bottom',
-	    align: 'left',
-	    donetext: 'Ok'
-	});
 
 	function read_date(date) {
 		var arrdate = date.split('-');
@@ -288,6 +150,38 @@
                 console.log('failed get data');
             }
         });
+    }
+
+    function batalkan_permintaan(id) {
+    	const swalWithBootstrapButtons = swal.mixin({
+		  	confirmButtonClass: 'btn btn-success mx-2',
+		  	cancelButtonClass: 'btn btn-primary mx-2',
+		  	buttonsStyling: false,
+		})
+
+		swalWithBootstrapButtons({
+		  	title: 'Apa Anda Yakin?',
+		  	text: "Saat membatalkannya data permintaan akan dihapus dan stok barang akan kembali pada kondisi di mana saat barang belum diminta",
+		  	type: 'warning',
+		  	showCancelButton: true,
+		  	showCloseButton: true,
+		  	confirmButtonText: 'Ya, Batalkan Permintaan!',
+		  	cancelButtonText: 'Back',
+		  	reverseButtons: true
+		}).then((result) => {
+		  	if (result.value) {
+		    	window.location = '<?php echo base_url() ?>permintaan/batal/'+id;
+		  	} else if (
+		    	// Read more about handling dismissals
+		    	result.dismiss === swal.DismissReason.cancel
+		  	) {
+		    	swal(
+		      		'Dibatalkan',
+		      		'Data Anda berhasil diamankan :)',
+		      		'error'
+		    	)
+		  	}
+		})
     }
 
     function hapus_permintaan(id) {

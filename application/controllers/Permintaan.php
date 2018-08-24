@@ -72,36 +72,65 @@ class Permintaan extends CI_Controller {
 		redirect(base_url().'permintaan/data/');
 	}
 
-	public function edit_permohonan()
+	public function edit()
 	{
 		$this->auth();
 
-		$IDpermohonan = $this->input->post('IDpermohonan');
-		$tanggalBerangkat = $this->input->post('edittanggalBerangkat');
-		$namaPengguna = $this->input->post('editnamaPengguna');
-		$satuanKerja = $this->input->post('editsatuanKerja');
-		$tujuan = $this->input->post('edittujuan');
-		$jamBerangkat = $this->input->post('editjamBerangkat');
-		$jamKembali = $this->input->post('editjamKembali');
-		$noPol = $this->input->post('editnoPol');
-		$pengemudi = $this->input->post('editpengemudi');
-		
+		$IDpermintaan = $this->input->post('IDpermintaan');
+		$namaKaryawan = $this->input->post('namaKaryawan');
+		$IDbarang = $this->input->post('IDbarang');
+		$jumlahBaru = $this->input->post('jumlah');
+
+		// Update jumlah barang
+		$permintaan = $this->admin_model->get_permintaan_data(array('IDpermintaan'=>$IDpermintaan));
+		$baranglama = $this->home_model->get_barang_where(array('IDbarang'=>$permintaan['IDbarang']));
+
+		// Check jika barang yg diminta sebelumnya sama dengan barang yg diminta pada pengeditan
+		if ($permintaan['IDbarang'] == $IDbarang)
+		{
+			$jumlahBarang = $baranglama['jumlahBarang'] + $permintaan['jumlah'] - $jumlahBaru;
+
+			// Update barang yang dipilih sebelum pengeditan
+			$update = array(
+				'jumlahBarang' => $jumlahBarang
+			);
+			$this->db->set($update);
+			$this->db->where('IDbarang',$permintaan['IDbarang']);
+			$this->db->update('barang');
+		}
+		else
+		{
+			$jumlahBarang = $baranglama['jumlahBarang'] + $permintaan['jumlah'];
+
+			// Update barang yg dipilih sebelum pengeditan
+			$update = array(
+				'jumlahBarang' => $jumlahBarang
+			);
+			$this->db->set($update);
+			$this->db->where('IDbarang',$permintaan['IDbarang']);
+			$this->db->update('barang');
+
+			// Update jumlah barang yg dipilih saat pengeditan
+			$barangbaru = $this->home_model->get_barang_where(array('IDbarang'=>$IDbarang));
+			$update = array(
+				'jumlahBarang' => ($barangbaru['jumlahBarang'] - $jumlahBaru)
+			);
+			$this->db->set($update);
+			$this->db->where('IDbarang',$IDbarang);
+			$this->db->update('barang');
+		}
+
 		$data = array(
-			'tanggalBerangkat' => $tanggalBerangkat,
-			'namaPengguna' => $namaPengguna,
-			'satuanKerja' => $satuanKerja,
-			'tujuan' => $tujuan,
-			'jamBerangkat' => $jamBerangkat,
-			'jamKembali' => $jamKembali,
-			'noPol' => $noPol,
-			'pengemudi' => $pengemudi
+			'namaKaryawan' => $namaKaryawan,
+			'IDbarang' => $IDbarang,
+			'jumlah' => $jumlahBaru
 		);
 		$this->db->set($data);
-		$this->db->where('IDpermohonan',$IDpermohonan);
-		$this->db->update('permohonan_kendaraan');
+		$this->db->where('IDpermintaan',$IDpermintaan);
+		$this->db->update('permintaan_barang');
 
-		$_SESSION['success'] = ['Berhasil!','Permohonan kendaraan berhasil diupdate!'];
-		redirect(base_url().'permohonan/data/');
+		$_SESSION['success'] = ['Berhasil!','Permintaan ATK berhasil diupdate!'];
+		redirect(base_url().'permintaan/data/');
 	}
 
 	public function hapus($id)
@@ -114,24 +143,28 @@ class Permintaan extends CI_Controller {
 		redirect(base_url()."permintaan/data");
 	}
 
-	public function cetakform($id)
-	{	
+	public function batal($id)
+	{
 		$this->auth();
-		
-		$permohonan = $this->admin_model->get_permohonan_data(array('IDpermohonan'=>$id));
 
-		if ($permohonan['approval'] == 'Belum ada persetujuan') {
-			redirect(base_url()."permohonan/data");
-		}
+		$barang = $this->admin_model->get_permintaan_data(array('IDpermintaan'=>$id));
+		$jumlah = $barang['jumlah'];
+		$IDbarang = $barang['IDbarang'];
 
-		$data = array(
-            'title'=> 'GasnetGo! - Permohonan Kendaraan Operasional',
-            'nav' => 'nav.php',
-            'isi' => 'pages/cetak_form',
-            'nav_active' => 'permohonan',
-            'permohonan' => $permohonan
-        );
-        $this->load->view('pages/cetak_form',$data);
+		// Update jumlah barang
+		$barang = $this->home_model->get_barang_where(array('IDbarang'=>$IDbarang));
+		$update = array(
+			'jumlahBarang' => ($barang['jumlahBarang'] + $jumlah)
+		);
+		$this->db->set($update);
+		$this->db->where('IDbarang',$IDbarang);
+		$this->db->update('barang');
+
+		// hapus data permintaan
+		$this->db->delete('permintaan_barang', array('IDpermintaan' => $id));
+
+		$_SESSION['success'] = ['Berhasil Dibatalkan!','Anda berhasil membatalkan permintaan ATK!'];
+		redirect(base_url()."permintaan/data");
 	}
 
 	public function auth()
