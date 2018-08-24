@@ -48,8 +48,8 @@
 					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDpermintaan ?>)">Edit</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermintaan ?>)'>Hapus</button>
+					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>

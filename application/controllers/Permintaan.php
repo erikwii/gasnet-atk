@@ -43,7 +43,16 @@ class Permintaan extends CI_Controller {
 		$namaKaryawan = $this->input->post('namaKaryawan');
 		$IDbarang = $this->input->post('IDbarang');
 		$jumlah = $this->input->post('jumlah');
-		
+
+		// Update jumlah barang
+		$barang = $this->home_model->get_barang_where(array('IDbarang'=>$IDbarang));
+		$update = array(
+			'jumlahBarang' => ($barang['jumlahBarang'] - $jumlah)
+		);
+		$this->db->set($update);
+		$this->db->where('IDbarang',$IDbarang);
+		$this->db->update('barang');
+
 		$data = array(
 			'namaKaryawan' => $namaKaryawan,
 			'IDbarang' => $IDbarang,
