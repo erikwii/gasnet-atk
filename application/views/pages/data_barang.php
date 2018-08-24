@@ -1,7 +1,7 @@
-<div class="container-fluid app">
+<div class="container app">
 	<div class="row my-3">
-        <div class="col-12 col-lg-12 col-md-4">
-        	<button class="btn btn-primary float-right my-2" data-toggle="modal" data-target="#exampleModalCenter">Tambah Akun</button>
+        <div class="col-12">
+        	<button class="btn btn-primary float-right my-2" data-toggle="modal" data-target="#exampleModalCenter">Tambah Barang</button>
         	<?php if (isset($_SESSION['error'])): ?>
         		<script>
         			swal({
@@ -22,91 +22,34 @@
         		</script>
 				<?php unset($_SESSION['success']) ?>
         	<?php endif ?>
-        </div>
-    </div>
-    <div class="row">
-	  <div class="col-2 fixed-top" style="margin-top: 90px">
-	    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-	      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">User</a>
-	      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Approval</a>
-	      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Admin</a>
-	    </div>
-	  </div>
-	  <div class="col-10 offset-2">
-	    <div class="tab-content" id="v-pills-tabContent">
-	      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-	      	<div class="table-responsive">
-        		<table class="table table-striped w-100" id="user_table">
-				  <thead class="w-100">
-				    <tr>
-				      <th scope="col">No</th>
-				      <th scope="col">Email</th>
-				      <th scope="col">Nama</th>
-				      <th scope="col">Posisi</th>
-				      <th scope="col">Status</th>
-				      <th scope="col">Action</th>
-				    </tr>
-				  </thead>
-				  <tbody class="w-100">
-				  	<?php $i = 1; ?>
-				  	<?php foreach ($user as $u): ?>
-				  		<tr>
-					      <th scope="row"><?php echo $i ?></th>
-					      <td><?php echo $u->email ?></td>
-					      <td><?php echo $u->nama ?></td>
-					      <td><?php echo $u->posisi ?></td>
-					      <td>
-					      	<?php if ($u->status == 'aktif'): ?>
-					      		<h5><span class="badge badge-success"><?php echo $u->status ?></span></h5>
-					      	<?php else: ?>
-					      		<span class="badge badge-danger"><?php echo $u->status ?></span>
-					      	<?php endif ?>
-					      </td>
-					      <td>
-					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-primary" onclick="edit_akun('<?php echo $u->email ?>')">Edit</button>
-					      		<button class="btn btn-sm btn-outline-danger" onclick='hapus_akun("<?php echo $u->email ?>")'>Hapus</button>
-					      	</div>
-					      </td>
-					    </tr>
-					    <?php $i++; ?>
-				  	<?php endforeach ?>
-				  </tbody>
-				</table>
-        	</div>
-	      </div>
-	      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-	      	<div class="table-responsive">
-        		<table class="table table-striped w-100" id="spv_table">
+        	<div class="table-responsive">
+        		<table class="table table-striped w-100" style="min-width: 100%" id="barang_table">
 				  <thead>
 				    <tr>
 				      <th scope="col">No</th>
-				      <th scope="col">Email</th>
-				      <th scope="col">Nama</th>
-				      <th scope="col">Posisi</th>
-				      <th scope="col">Status</th>
+				      <th scope="col">Nama Barang</th>
+				      <th scope="col">Tipe Barang</th>
+				      <th scope="col">Jumlah</th>
 				      <th scope="col">Action</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				  	<?php $i = 1; ?>
-				  	<?php foreach ($supervisor as $spv): ?>
+				  	<?php foreach ($barang as $p): ?>
+				  		<?php 
+				  			$timestamp = strtotime($p->tanggalBerangkat);
+							$day = date('D', $timestamp);
+				  		?>
 				  		<tr>
 					      <th scope="row"><?php echo $i ?></th>
-					      <td><?php echo $spv->email ?></td>
-					      <td><?php echo $spv->nama ?></td>
-					      <td><?php echo $spv->posisi ?></td>
-					      <td>
-					      	<?php if ($spv->status == 'aktif'): ?>
-					      		<h5><span class="badge badge-success"><?php echo $spv->status ?></span></h5>
-					      	<?php else: ?>
-					      		<span class="badge badge-danger"><?php echo $spv->status ?></span>
-					      	<?php endif ?>
-					      </td>
+					      <td><?php echo $p->namaBarang ?></td>
+					      <td><?php echo $p->tipeBarang ?></td>
+					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-primary" onclick="edit_akun('<?php echo $spv->email ?>')">Edit</button>
-					      		<button class="btn btn-sm btn-outline-danger" onclick="hapus_akun('<?php echo $spv->email ?>')">Hapus</button>
+					      		<button class="btn btn-sm btn-primary" onclick="lihat_permohonan(<?php echo $p->IDpermohonan ?>)">Lihat Lengkap</button>
+					      		<button class="btn btn-sm btn-warning" onclick="edit_permohonan(<?php echo $p->IDpermohonan ?>)">Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermohonan ?>)'>Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>
@@ -114,50 +57,7 @@
 				  	<?php endforeach ?>
 				  </tbody>
 				</table>
-        	</div>
-	      </div>
-	      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-	      	<div class="table-responsive">
-        		<table class="table table-striped w-100" id="admin_table">
-				  <thead>
-				    <tr>
-				      <th scope="col">No</th>
-				      <th scope="col">Email</th>
-				      <th scope="col">Nama</th>
-				      <th scope="col">Posisi</th>
-				      <th scope="col">Status</th>
-				      <th scope="col">Action</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	<?php $i = 1; ?>
-				  	<?php foreach ($admin as $a): ?>
-				  		<tr>
-					      <th scope="row"><?php echo $i ?></th>
-					      <td><?php echo $a->email ?></td>
-					      <td><?php echo $a->nama ?></td>
-					      <td><?php echo $a->posisi ?></td>
-					      <td>
-					      	<?php if ($a->status == 'aktif'): ?>
-					      		<h5><span class="badge badge-success"><?php echo $a->status ?></span></h5>
-					      	<?php else: ?>
-					      		<span class="badge badge-danger"><?php echo $a->status ?></span>
-					      	<?php endif ?>
-					      </td>
-					      <td>
-					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-primary" onclick="edit_akun('<?php echo $a->email ?>')">Edit</button>
-					      		<button class="btn btn-sm btn-outline-danger" onclick='hapus_akun("<?php echo $a->email ?>")'>Hapus</button>
-					      	</div>
-					      </td>
-					    </tr>
-					    <?php $i++; ?>
-				  	<?php endforeach ?>
-				  </tbody>
-				</table>
-        	</div>
-	      </div>
-	    </div>
+			</div>
 	  </div>
 	</div>
     <div class="row">
@@ -386,8 +286,8 @@
 <script>
 
 	$(document).ready(function(){
-		if(!$("table#user_table tr td").hasClass('null')) {
-			var userTable = $('#user_table').DataTable({
+		if(!$("table#barang_table tr td").hasClass('null')) {
+			var userTable = $('#barang_table').DataTable({
 				info: false,
 				dom: '<"top"B>flt<"bottom"p><"clear">',
 				oLanguage: {sLengthMenu: "_MENU_"},
@@ -397,43 +297,7 @@
 		            {
 		                extend: 'excelHtml5',
 		                exportOptions: {
-		                    columns: [0,1,2,3,4]
-		                }
-		            }
-		        ]
-			});
-		}
-
-		if(!$("table#spv_table tr td").hasClass('null')) {
-			var spvTable = $('#spv_table').DataTable({
-				info: false,
-				dom: '<"top"B>flt<"bottom"p><"clear">',
-				oLanguage: {sLengthMenu: "_MENU_"},
-				lengthMenu: [[5, 10, 25, 50, -1], ["5 Baris","10 Baris", "25 Baris", "50 Baris", "Semua"]],
-				order: [[0, "asc"]],
-				buttons: [
-		            {
-		                extend: 'excelHtml5',
-		                exportOptions: {
-		                    columns: [0,1,2,3,4]
-		                }
-		            }
-		        ]
-			});
-		}
-
-		if(!$("table#admin_table tr td").hasClass('null')) {
-			var adminTable = $('#admin_table').DataTable({
-				info: false,
-				dom: '<"top"B>flt<"bottom"p><"clear">',
-				oLanguage: {sLengthMenu: "_MENU_"},
-				lengthMenu: [[5, 10, 25, 50, -1], ["5 Baris","10 Baris", "25 Baris", "50 Baris", "Semua"]],
-				order: [[0, "asc"]],
-				buttons: [
-		            {
-		                extend: 'excelHtml5',
-		                exportOptions: {
-		                    columns: [0,1,2,3,4]
+		                    columns: [0,1,2,3]
 		                }
 		            }
 		        ]

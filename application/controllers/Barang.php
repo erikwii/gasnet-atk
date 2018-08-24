@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Barang extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -14,10 +14,10 @@ class Admin extends CI_Controller {
 		$this->auth();
 
 		$data = array(
-            'title'=> 'GasnetGo! - Data permohonan kendaraan operasional',
+            'title'=> 'Gasnet ATK! - Data ATK',
             'nav' => 'nav.php',
-            'isi' => 'pages/data_permohonan',
-            'permohonan' => $this->admin_model->get_permohonan(),
+            'isi' => 'pages/data_barang',
+            'barang' => $this->home_model->get_barang(),
             'nav_active' => 'data'
         );
         $this->load->view('layout/wrapper',$data);
@@ -236,9 +236,9 @@ class Admin extends CI_Controller {
 
 	public function auth()
 	{
-		if (($_SESSION['atk_level'] != 0 && $_SESSION['atk_level'] != 3) || !isset($_SESSION['atk_email']) ) {
+		if (!isset($_SESSION['atk_email'])) {
 			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['atk_level'];
-			redirect(base_url()."home/");
+			redirect(base_url());
 		}
 	}
 

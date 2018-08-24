@@ -41,23 +41,6 @@ class Home_model extends CI_Model{
 		$this->db->where('email', $email);
 		return $query = $this->db->get()->num_rows();
 	}
-	
-	public function get_inventaris($IDinventaris=null)
-	{
-		if (isset($IDinventaris)) {
-			$this->db->join('barang', 'inventaris.IDbarang = barang.IDbarang');
-			return $this->db->get_where('inventaris', array('IDinventaris'=>$IDinventaris))->result();
-		}else{
-			$this->db->join('barang', 'inventaris.IDbarang = barang.IDbarang');
-			return $this->db->get('inventaris')->result();
-		}
-	}
-
-	public function get_inventaris_where($where)
-	{
-		$this->db->join('barang', 'inventaris.IDbarang = barang.IDbarang');
-		return $this->db->get_where('inventaris', $where)->row_array();
-	}
 
 	public function get_barang($IDbarang=null)
 	{

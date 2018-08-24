@@ -22,35 +22,20 @@
 				<?php unset($_SESSION['success']) ?>
         	<?php endif ?>
         	<div class="table-responsive">
-        		<table class="table table-responsive table-striped w-100" style="min-width: 100%" id="permohonan_table">
+        		<table class="table table-striped w-100" style="min-width: 100%" id="permintaan_table">
 				  <thead>
 				    <tr>
 				      <th scope="col">No</th>
-				      <th scope="col">Hari/Tgl. Keberangkatan</th>
-				      <th scope="col">Nama Pengguna</th>
-				      <th scope="col">Satuan Kerja</th>
-				      <th scope="col">Tujuan</th>
-				      <th scope="col">Jam Berangkat</th>
-				      <th scope="col">Jam Kembali</th>
-				      <th scope="col">No. Polisi</th>
-				      <th scope="col">Pengemudi</th>
-				      <th scope="col">KM. Awal</th>
-				      <th scope="col">KM. Akhir</th>
-				      <th scope="col">Persekot</th>
-				      <th scope="col">Pemohon</th>
-				      <th scope="col">Persetujuan</th>
-				      <?php if ($_SESSION['go_level'] == 2): ?>
-				      	<th scope="col">Setujui</th>
-				      <?php endif ?>
-				      <?php if ($_SESSION['go_level'] == 3 || $_SESSION['go_level'] == 0): ?>
-				      	<th scope="col">Print</th>
-				      <?php endif ?>
+				      <th scope="col">Tanggal</th>
+				      <th scope="col">Nama Karyawan</th>
+				      <th scope="col">Nama Barang</th>
+				      <th scope="col">Jumlah</th>
 				      <th scope="col">Action</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				  	<?php $i = 1; ?>
-				  	<?php foreach ($permohonan as $p): ?>
+				  	<?php foreach ($permintaan as $p): ?>
 				  		<?php 
 				  			$timestamp = strtotime($p->tanggalBerangkat);
 							$day = date('D', $timestamp);
@@ -58,85 +43,9 @@
 				  		<tr>
 					      <th scope="row"><?php echo $i ?></th>
 					      <td><?php echo $this->home_model->tranlate_day_to_indo($day)."/".$this->home_model->read_date($p->tanggalBerangkat) ?></td>
-					      <td><?php echo $p->namaPengguna ?></td>
-					      <td><?php echo $p->satuanKerja ?></td>
-					      <td><?php echo $p->tujuan ?></td>
-					      <td><?php echo $p->jamBerangkat ?></td>
-					      <td><?php echo $p->jamKembali ?></td>
-					      <td><?php echo $p->noPol ?></td>
-					      <td><?php echo $p->pengemudi ?></td>
-					      <td><?php echo $p->kmAwal ?></td>
-					      <td><?php echo $p->kmAkhir ?></td>
-					      <td><?php echo $p->persekot ?></td>
-					      <td><?php echo $p->nama ?></td>
-					      <td>
-					      	<!-- Bagian keterangan -->
-				      		<?php if ($p->approval == 'Belum ada persetujuan'): ?>
-				      			<span class="text-warning"><?php echo $p->approval ?></span>
-				      		<?php elseif($p->approval == 'Disetujui Supervisor'): ?>
-				      			<span class="text-success"><?php echo $p->approval ?></span>
-				      		<?php elseif($p->approval == 'Disetujui Pusat'): ?>
-				      			<span class="text-primary"><?php echo $p->approval ?></span>
-				      		<?php else: ?>
-				      			<span class="text-danger"><?php echo $p->approval ?></span>
-				      		<?php endif ?>
-				      		<!-- Bagian keterangan -->
-					      </td>
-
-					      <!-- Bagian Approval -->
-					    <?php if ($_SESSION['go_level'] == 2): ?>
-					      <td>
-					      	<!-- keterangn Approval pada users -->
-					      	<?php if ($_SESSION['go_level'] == 1): ?>
-					      		<?php if ($p->approval == 'Belum ada persetujuan'): ?>
-					      			<span class="text-warning"><?php echo $p->approval ?></span>
-					      		<?php elseif($p->approval == 'Disetujui Supervisor'): ?>
-					      			<span class="text-success"><?php echo $p->approval ?></span>
-					      		<?php elseif($p->approval == 'Disetujui Pusat'): ?>
-					      			<span class="text-primary"><?php echo $p->approval ?></span>
-					      		<?php else: ?>
-					      			<span class="text-danger"><?php echo $p->approval ?></span>
-					      		<?php endif ?>
-					      	<!-- keterangn Approval pada users -->
-
-					      	<!-- bagian persetujuan oleh Supervisor -->
-					      	<?php elseif ($_SESSION['go_level'] == 2): ?>
-					      		<?php if($p->approval == 'Disetujui Supervisor'): ?>
-					      			<a href="<?php echo base_url() ?>spv/batal_setuju/<?php echo $p->IDpermohonan ?>" class="btn btn-sm btn-outline-secondary">Batal Setuju</a>
-					      		<?php elseif($p->approval == 'Disetujui Pusat'): ?>
-					      			<span class="text-primary">Telah <?php echo $p->approval ?></span>
-					      		<?php elseif($p->approval == 'Tidak disetujui Supervisor'): ?>
-					      			<a href="<?php echo base_url() ?>spv/setuju/<?php echo $p->IDpermohonan ?>" class="btn btn-sm btn-outline-primary">Setujui</a>
-					      		<?php elseif($p->approval == 'Tidak disetujui Pusat'): ?>
-					      			<span class="text-danger">Pusat tidak setuju</span>
-					      		<?php else: ?>
-					      			<div class="btn-group">
-							      		<a href="<?php echo base_url() ?>spv/setuju/<?php echo $p->IDpermohonan ?>" class="btn btn-sm btn-outline-primary">Setuju</a>
-							      		<a href="<?php echo base_url() ?>spv/tidak_setuju/<?php echo $p->IDpermohonan ?>" class="btn btn-sm btn-outline-secondary">Tidak</a>
-							      	</div>
-					      		<?php endif ?>
-					      	<!-- bagian persetujuan oleh Supervisor -->
-					      	<?php endif ?>
-					      </td>
-					  	<?php endif; ?>
-					  	<!-- Bagian Approval -->
-						
-						<?php if ($_SESSION['go_level'] == 3 || $_SESSION['go_level'] == 0): ?>
-					      <td>
-					      	<!-- Bagian Print Form -->
-					      	<?php if ($p->approval == 'Disetujui Supervisor'): ?>
-					      		<?php if ($p->pengemudi == null || $p->noPol == null): ?>
-					      			<button class="btn btn-sm btn-warning" onclick="tindak_lanjut_permohonan(<?php echo $p->IDpermohonan ?>)"><i class="fa fa-file-o"></i> Print</button>
-					      		<?php else: ?>
-									<a href="<?php echo base_url('permohonan/cetakform/').$p->IDpermohonan ?>" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-o"></i> Print</a>
-					      		<?php endif ?>
-					      	<?php else: ?>
-					      		<button class="btn btn-sm btn-secondary" disabled><i class="fa fa-file-o"></i> Print</button>
-					      	<?php endif ?>
-					      	<!-- Bagian Print Form -->
-					      </td>
-						<?php endif ?>
-					  	
+					      <td><?php echo $p->namaKaryawan ?></td>
+					      <td><?php echo $p->namaBarang ?></td>
+					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
 					      		<button class="btn btn-sm btn-primary" onclick="lihat_permohonan(<?php echo $p->IDpermohonan ?>)">Lihat Lengkap</button>
@@ -152,65 +61,6 @@
         	</div>
         </div>
     </div>
-	
-	<!-- tindak lanjut Modal -->
-	<div class="modal fade" id="TDModalCenter" tabindex="-1" role="dialog" aria-labelledby="TDModalCenterTitle" aria-hidden="true">
-	  	<div class="modal-dialog modal-dialog-centered" role="document">
-	    	<div class="modal-content">
-	      		<div class="modal-header">
-	        		<h5 class="modal-title" id="exampleModalCenterTitle">Isi Kelengkapan</span></h5>
-	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          			<span aria-hidden="true">&times;</span>
-	        		</button>
-	      		</div>
-	      		<div class="modal-body">
-	      			<?php $attributes = array('class' => 'needs-validation', 'id'=>'TDform'); ?>
-					<?php echo form_open_multipart('admin/tindak_lanjut_permohonan/', $attributes);?>
-						<input type="number" name="TDIDpermohonan" class="d-none">
-					  	<div class="form-row">
-							<div class="form-group col-md-6">
-						    	<label for="TDnoPol">No. Polisi</label>
-						    	<input type="text" class="form-control" id="TDnoPol" name="TDnoPol" placeholder='B 1234 CD' required list="nopol" />
-						    	<?php $nopol = $this->admin_model->get_permohonan_column('noPol') ?>
-						    	<datalist id="nopol">
-						    		<?php foreach ($nopol as $no): ?>
-						    			<option value="<?php echo $no->noPol ?>"><?php echo $no->noPol ?></option>
-						    		<?php endforeach ?>
-						    	</datalist>
-						    	<div class="invalid-feedback">Anda harus mengisi No Polisi</div>
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="TDpengemudi">Nama Pengemudi</label>
-						    	<input type="text" class="form-control" id="TDpengemudi" name="TDpengemudi" placeholder="Nama Pengemudi" required />
-						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
-						  	</div>
-						  	<div class="form-group col-md-3">
-						    	<label for="TDkmAwal">KM Awal</label>
-						    	<input type="number" class="form-control" id="TDkmAwal" name="TDkmAwal" list="satuan" placeholder="KM Awal" />
-						    	<div class="invalid-feedback">Anda harus mengisi KM Awal</div>
-						  	</div>
-						  	<div class="form-group col-md-3">
-						    	<label for="TDkmAkhir">KM Akhir</label>
-						    	<input type="number" class="form-control" id="TDkmAkhir" name="TDkmAkhir" placeholder="KM Akhir"/>
-						    	<div class="invalid-feedback">Anda harus mengisi KM AKhir</div>
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="TDpersekot">Persekot</label>
-						    	<div class="input-group">
-							    	<div class="input-group-prepend">
-								        <span class="input-group-text">Rp.</span>
-								    </div>
-							    	<input type="number" class="form-control" id="TDpersekot" name="TDpersekot" placeholder="Persekot"/>
-						    	</div>
-						  	</div>
-					  	</div>
-					  	<button type="submit" class="btn btn-lg btn-block btn-primary">GO!</button>
-					</form>
-	      		</div>
-	    	</div>
-	  	</div>
-	</div>
-	<!-- tindak lanjut Modal -->
 
 	<!-- Edit Modal -->
 	<div class="modal fade" id="editModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -581,13 +431,7 @@
 		  	reverseButtons: true
 		}).then((result) => {
 		  	if (result.value) {
-		    	<?php if($_SESSION['go_level'] == 1): ?>
-	  				window.location = '<?php echo base_url() ?>permohonan/hapus_permohonan/'+id;
-	  			<?php elseif($_SESSION['go_level'] == 2): ?>
-		  			window.location = '<?php echo base_url() ?>spv/hapus_permohonan/'+id;
-	  			<?php else: ?>
-	    			window.location = '<?php echo base_url() ?>admin/hapus_permohonan/'+id;
-	    		<?php endif ?>
+		    	window.location = '<?php echo base_url() ?>permintaan/hapus_permohonan/'+id;
 		  	} else if (
 		    	// Read more about handling dismissals
 		    	result.dismiss === swal.DismissReason.cancel
@@ -622,55 +466,20 @@
 </script>
 
 <script>
-
 	$(document).ready(function(){
 
-		if(!$("table#permohonan_table tr td").hasClass('null')) {
-			var preRegTable = $('#permohonan_table').DataTable({
+		if(!$("table#permintaan_table tr td").hasClass('null')) {
+			var preRegTable = $('#permintaan_table').DataTable({
 				info: false,
 				dom: '<"top"B>flt<"bottom"p><"clear">',
 				oLanguage: {sLengthMenu: "_MENU_"},
 				lengthMenu: [[5, 10, 25, 50, -1], ["5 Baris","10 Baris", "25 Baris", "50 Baris", "Semua"]],
 				order: [[0, "asc"]],
-				"columnDefs": [
-		            {
-		                "targets": [ 5 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 6 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 7 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 8 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 9 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 10 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 11 ],
-		                "visible": false
-		            },
-		            {
-		                "targets": [ 12 ],
-		                "visible": false
-		            }
-		        ],
 				buttons: [
 		            {
 		                extend: 'excelHtml5',
 		                exportOptions: {
-		                    columns: [0,1,2,3,5,4,6,7,8,9,10,11,12,13]
+		                    columns: [0,1,2,3,4]
 		                }
 		            }
 		        ]

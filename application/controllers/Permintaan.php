@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Permohonan extends CI_Controller {
+class Permintaan extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -14,10 +14,10 @@ class Permohonan extends CI_Controller {
 		$this->auth();
 
 		$data = array(
-            'title'=> 'GasnetGo! - Permohonan Kendaraan Operasional',
+            'title'=> 'Gasnet ATK - Permintaan ATK',
             'nav' => 'nav.php',
-            'isi' => 'pages/permohonan',
-            'nav_active' => 'permohonan'
+            'isi' => 'pages/permintaan',
+            'nav_active' => 'permintaan'
         );
         $this->load->view('layout/wrapper',$data);
 	}
@@ -29,8 +29,8 @@ class Permohonan extends CI_Controller {
 		$data = array(
             'title'=> 'GasnetGo! - Permohonan Kendaraan Operasional',
             'nav' => 'nav.php',
-            'isi' => 'pages/data_permohonan',
-            'permohonan' => $this->admin_model->get_permohonan(),
+            'isi' => 'pages/data_permintaan',
+            'permintaan' => $this->admin_model->get_permintaan(),
             'nav_active' => 'data'
         );
         $this->load->view('layout/wrapper',$data);
@@ -49,7 +49,7 @@ class Permohonan extends CI_Controller {
 		$noPol = $this->input->post('noPol');
 		$pengemudi = $this->input->post('pengemudi');
 		$tanggalPermohonan = date('Y-m-d');
-		$email = $_SESSION['go_email'];
+		$email = $_SESSION['atk_email'];
 		
 		$data = array(
 			'tanggalBerangkat' => $tanggalBerangkat,
@@ -141,7 +141,7 @@ class Permohonan extends CI_Controller {
 	{	
 		$this->auth();
 
-		if (!isset($_SESSION['go_email']) || !isset($_SESSION['go_password'])) {
+		if (!isset($_SESSION['atk_email']) || !isset($_SESSION['go_password'])) {
 			$_SESSION['login_error'] = 'Anda belum melakukan login';
 			redirect(base_url());
 		}
@@ -174,9 +174,9 @@ class Permohonan extends CI_Controller {
 
 	public function auth()
 	{
-		if (!isset($_SESSION['go_email'])) {
-			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['go_level'];
-			redirect(base_url()."home/");
+		if (!isset($_SESSION['atk_email'])) {
+			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['atk_level'];
+			redirect(base_url());
 		}
 	}
 }

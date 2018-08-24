@@ -59,27 +59,9 @@ class Home extends CI_Controller {
                     $this->session->set_userdata('atk_password', $password);
                     $this->session->set_userdata('atk_level', $level);
 
-                    $_SESSION['success'] = ["Berhasil Login!","Selamat datang kembali di GasnetGo, ".$name];
+                    $_SESSION['success'] = ["Berhasil Login!","Selamat datang kembali di Gasnet ATK, ".$name];
 
-                    if (isset($_SESSION['goto'])) {
-                        $goto = $_SESSION['goto']; // value transfer to new variable
-                        unset($_SESSION['goto']); // unset session
-
-                        redirect($goto);
-                    } else {
-                        if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3)
-                        {
-                            redirect(base_url()."admin");
-                        }
-                        elseif ($_SESSION['atk_level'] == 1)
-                        {
-                            redirect(base_url()."permohonan");
-                        }
-                        elseif ($_SESSION['atk_level'] == 2)
-                        {
-                            redirect(base_url()."spv");
-                        }
-                    }
+                    redirect(base_url()."permintaan");
                 } else {
                 	$this->session->set_userdata('login_error', 'Password yang dimasukkan salah....');
                 	redirect(base_url());
@@ -106,14 +88,8 @@ class Home extends CI_Controller {
     // user authentication based on session 'atk_level'
     public function check_auth()
     {
-        if (isset($_SESSION['atk_level'])) {
-            if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3) {
-                redirect(base_url()."admin/");
-            }elseif($_SESSION['atk_level'] == 2){
-                redirect(base_url()."spv/");
-            }else{
-                redirect(base_url()."permohonan/");
-            }
+        if (isset($_SESSION['atk_email'])) {
+            redirect(base_url()."permintaan/");
         }
     }
 

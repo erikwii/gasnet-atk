@@ -2,48 +2,39 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin_model extends CI_Model{
 
-	public function get_permohonan($where=null)
+	public function get_permintaan($where=null)
 	{
 		if ($where == null) {
-			$this->db->order_by('IDpermohonan', 'DESC');
-			$this->db->join('users', 'users.email = permohonan_kendaraan.email');
-			$this->db->like('tanggalPermohonan', date('Y-m'), 'after');
-			$query = $this->db->get('permohonan_kendaraan');
+			$this->db->order_by('IDpermintaan', 'DESC');
+			$this->db->join('barang', 'barang.IDbarang = permintaan_barang.IDbarang');
+			$this->db->like('tanggal', date('Y'), 'after');
+			$query = $this->db->get('permintaan_barang');
 			return $query->result();
 			
 		} else {
-			$this->db->order_by('IDpermohonan', 'DESC');
-			$this->db->join('users', 'users.email = permohonan_kendaraan.email');
-			$this->db->like('tanggalPermohonan', date('Y-m'), 'after');
-			$query = $this->db->get_where('permohonan_kendaraan',$where);
+			$this->db->order_by('IDpermintaan', 'DESC');
+			$this->db->join('barang', 'barang.IDbarang = permintaan_barang.IDbarang');
+			$this->db->like('tanggalpermintaan', date('Y-m'), 'after');
+			$query = $this->db->get_where('permintaan_barang',$where);
 			return $query->result();
 		}
 	}
 
-	public function get_permohonan_data($where)
+	public function get_permintaan_data($where)
 	{
-		$this->db->order_by('IDpermohonan', 'DESC');
-		$this->db->join('users', 'users.email = permohonan_kendaraan.email');
-		$this->db->like('tanggalPermohonan', date('Y-m'), 'after');
-		$query = $this->db->get_where('permohonan_kendaraan',$where);
+		$this->db->order_by('IDpermintaan', 'DESC');
+		$this->db->join('barang', 'barang.IDbarang = permintaan_barang.IDbarang');
+		$this->db->like('tanggal', date('Y'), 'after');
+		$query = $this->db->get_where('permintaan_barang',$where);
 		return $query->row_array();
 	}
 
-	public function get_permohonan_column($select)
+	public function get_permintaan_column($select)
 	{
 		$this->db->distinct();
-		$this->db->join('users', 'users.email = permohonan_kendaraan.email');
+		$this->db->join('barang', 'barang.IDbarang = permintaan_barang.IDbarang');
 		$this->db->select($select);
-		return $this->db->get('permohonan_kendaraan')->result();
-	}
-
-	public function get_permohonan_notif()
-	{
-		$this->db->join('users', 'users.email = permohonan_kendaraan.email');
-		$this->db->where('pengemudi is null', null, false);
-		$this->db->or_where('noPol is null', null, false);
-		$this->db->like('tanggalPermohonan', date('Y-m'), 'after');
-		return $this->db->get('permohonan_kendaraan')->num_rows();
+		return $this->db->get('permintaan_barang')->result();
 	}
 
 	public function get_akun_role($role=null)

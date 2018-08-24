@@ -13,68 +13,40 @@
 		    	<?php if (isset($_SESSION['atk_email'])): ?>
 		    		<?php if (isset($nav_active) && $nav_active == 'permohonan'): ?>
 						<li class="nav-item active">
-					       	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>permohonan/"><i class="fa fa-file-text-o"></i> Form Permohonan</a></b>
+					       	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>permintaan/"><i class="fa fa-file-text-o"></i> Form Permintaan</a></b>
 					    </li>
 			    	<?php else: ?>
 			    		<li class="nav-item">
-					       	<b><a class="nav-link" href="<?php echo base_url() ?>permohonan/"><i class="fa fa-file-text-o"></i> Form Permohonan</a></b>
+					       	<b><a class="nav-link" href="<?php echo base_url() ?>permintaan/"><i class="fa fa-file-text-o"></i> Form Permintaan</a></b>
 					    </li>
 			    	<?php endif ?>
 		    	<?php endif ?>
 		    	<?php if (isset($_SESSION['atk_email'])): ?>
-					<?php if (isset($_SESSION['atk_level']) && $_SESSION['atk_level'] == 1): ?>
-						<?php if (isset($nav_active) && $nav_active == 'data'): ?>
-							<li class="nav-item active">
-					        	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>permohonan/data/"><i class="fa fa-inbox"></i> Data Permohonan</a></b>
-					      	</li>
-					    <?php else: ?>
-					    	<li class="nav-item">
-					        	<b><a class="nav-link" href="<?php echo base_url() ?>permohonan/data/"><i class="fa fa-inbox"></i> Data Permohonan</a></b>
-					      	</li>
-						<?php endif ?>
-				    <?php elseif(isset($_SESSION['atk_level']) && $_SESSION['atk_level'] == 2): ?>
-				    	<?php if (isset($nav_active) && $nav_active == 'data'): ?>
-				    		<li class="nav-item active">
-					        	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>spv/"><i class="fa fa-inbox"></i> Data Permohonan</a></b>
-					      	</li>
-					    <?php else: ?>
-					    	<li class="nav-item">
-					        	<b><a class="nav-link" href="<?php echo base_url() ?>spv/"><i class="fa fa-inbox"></i> Data Permohonan</a></b>
-					      	</li>
-				    	<?php endif ?>
+			    	<?php if (isset($nav_active) && $nav_active == 'data'): ?>
+				    	<li class="nav-item active">
+				        	<b>
+				        		<a class="nav-link text-primary" href="<?php echo base_url() ?>permintaan/data/">
+				        			<i class="fa fa-inbox"></i> Data Permintaan
+				        		</a>
+				        	</b>
+				      	</li>
 				    <?php else: ?>
-				    	<?php if (isset($nav_active) && $nav_active == 'data'): ?>
-					    	<li class="nav-item active">
-					        	<b>
-					        		<a class="nav-link text-primary" href="<?php echo base_url() ?>admin/">
-					        			<i class="fa fa-inbox"></i> Data Permohonan
-					        			<?php if ($this->admin_model->get_permohonan_notif() > 0): ?>
-					        				<span class="badge badge-primary" data-toggle="tooltip" data-placement="top" data-html="true" title="Terdapat <?php echo $this->admin_model->get_permohonan_notif() ?> permohonan pending"><?php echo $this->admin_model->get_permohonan_notif() ?></span>
-					        			<?php endif ?> 
-					        		</a>
-					        	</b>
-					      	</li>
-					    <?php else: ?>
-					    	<li class="nav-item">
-					        	<b>
-					        		<a class="nav-link" href="<?php echo base_url() ?>admin/">
-					        			<i class="fa fa-inbox"></i> Data Permohonan 
-					        			<?php if ($this->admin_model->get_permohonan_notif() > 0): ?>
-					        				<span class="badge badge-primary" data-toggle="tooltip" data-placement="top" data-html="true" title="Terdapat <?php echo $this->admin_model->get_permohonan_notif() ?> permohonan pending"><?php echo $this->admin_model->get_permohonan_notif() ?></span>
-					        			<?php endif ?> 
-					        		</a>
-					        	</b>
-					      	</li>
-				      	<?php endif; ?>
-				      	<?php if (isset($nav_active) && $nav_active == 'akun'): ?>
-							<li class="nav-item active">
-					        	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>admin/akun/"><i class="fa fa-users"></i> Data Akun</a></b>
-					      	</li>
-					    <?php else: ?>
-					    	<li class="nav-item">
-					        	<b><a class="nav-link" href="<?php echo base_url() ?>admin/akun/"><i class="fa fa-users"></i> Data Akun</a></b>
-					      	</li>
-						<?php endif ?>
+				    	<li class="nav-item">
+				        	<b>
+				        		<a class="nav-link" href="<?php echo base_url() ?>permintaan/data/">
+				        			<i class="fa fa-inbox"></i> Data Permintaan 
+				        		</a>
+				        	</b>
+				      	</li>
+			      	<?php endif; ?>
+			      	<?php if (isset($nav_active) && $nav_active == 'barang'): ?>
+						<li class="nav-item active">
+				        	<b><a class="nav-link text-primary" href="<?php echo base_url() ?>barang/"><i class="fa fa-cube"></i> Data Barang</a></b>
+				      	</li>
+				    <?php else: ?>
+				    	<li class="nav-item">
+				        	<b><a class="nav-link" href="<?php echo base_url() ?>barang/"><i class="fa fa-cube"></i> Data Barang</a></b>
+				      	</li>
 					<?php endif ?>
 				<?php endif ?>
 				<?php if (isset($_SESSION['atk_email'])): ?>
