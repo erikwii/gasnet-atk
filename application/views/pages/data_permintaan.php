@@ -50,7 +50,7 @@
 					      	<div class="btn-group">
 					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permintaan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
 					      		<button class="btn btn-sm btn-success" onclick='batalkan_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-refresh"></i> Batalkan</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
+					      		<button class="btn btn-sm btn-danger align-middle d-inline-flex" onclick='hapus_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="material-icons">delete_outline</i> Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>

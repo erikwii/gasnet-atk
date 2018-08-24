@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2018 at 04:25 AM
+-- Generation Time: Aug 24, 2018 at 09:19 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -21,6 +21,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `gasnet`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barang`
+--
+
+CREATE TABLE `barang` (
+  `IDbarang` int(11) NOT NULL,
+  `namaBarang` varchar(50) NOT NULL,
+  `tipeBarang` varchar(50) DEFAULT NULL,
+  `jumlahBarang` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`IDbarang`, `namaBarang`, `tipeBarang`, `jumlahBarang`) VALUES
+(1, 'Bolpoin', 'Alat Tulis', 70),
+(2, 'Stepler', 'Alat Tulis', 9);
 
 -- --------------------------------------------------------
 
@@ -419,52 +440,32 @@ INSERT INTO `inventaris` (`IDinventaris`, `kodeBarang`, `jenisAset`, `namaBarang
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permohonan_kendaraan`
+-- Table structure for table `permintaan_barang`
 --
 
-CREATE TABLE `permohonan_kendaraan` (
-  `IDpermohonan` int(11) NOT NULL,
-  `tanggalBerangkat` date NOT NULL,
-  `namaPengguna` varchar(100) NOT NULL,
-  `satuanKerja` varchar(100) NOT NULL,
-  `tujuan` varchar(255) NOT NULL,
-  `jamBerangkat` time NOT NULL,
-  `jamKembali` time NOT NULL,
-  `noPol` varchar(10) DEFAULT NULL,
-  `pengemudi` varchar(50) DEFAULT NULL,
-  `tanggalPermohonan` date NOT NULL,
-  `kmAwal` int(11) DEFAULT NULL,
-  `kmAkhir` int(11) DEFAULT NULL,
-  `persekot` varchar(12) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `approval` varchar(50) DEFAULT 'Belum ada persetujuan'
+CREATE TABLE `permintaan_barang` (
+  `IDpermintaan` int(11) NOT NULL,
+  `namaKaryawan` varchar(100) NOT NULL,
+  `IDbarang` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `users`
+-- Dumping data for table `permintaan_barang`
 --
 
-CREATE TABLE `users` (
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `posisi` varchar(100) DEFAULT NULL,
-  `level` int(11) NOT NULL DEFAULT '1',
-  `status` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`email`, `password`, `nama`, `posisi`, `level`, `status`) VALUES
-('admin@gasnet.com', '$2y$10$6gPLGKysCVOqIdK0ngkvl.eaWoj2tgAfLF1GIEh0zQtCQ5D7LipuC', 'Erik', NULL, 0, 'aktif');
+INSERT INTO `permintaan_barang` (`IDpermintaan`, `namaKaryawan`, `IDbarang`, `jumlah`, `tanggal`) VALUES
+(9, 'Erik Santiago', 2, 1, '2018-08-24');
 
 -- --------------------------------------------------------
 
+
 --
--- Indexes for dumped tables
+-- Indexes for table `barang`
 --
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`IDbarang`);
 
 --
 -- Indexes for table `inventaris`
@@ -474,27 +475,17 @@ ALTER TABLE `inventaris`
   ADD KEY `IDbarang_inventaris_barang` (`namaBarang`);
 
 --
--- Indexes for table `permohonan_kendaraan`
+-- Indexes for table `permintaan_barang`
 --
-ALTER TABLE `permohonan_kendaraan`
-  ADD PRIMARY KEY (`IDpermohonan`),
-  ADD KEY `email_permohonan_kendaraan_users` (`email`);
+ALTER TABLE `permintaan_barang`
+  ADD PRIMARY KEY (`IDpermintaan`),
+  ADD KEY `IDbarang_permintaan_barang` (`IDbarang`);
 
 --
--- Indexes for table `users`
+-- AUTO_INCREMENT for table `barang`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`email`);
-
---
--- Indexes for table `vendor`
---
-ALTER TABLE `vendor`
-  ADD PRIMARY KEY (`IDvendor`);
-
---
--- AUTO_INCREMENT for dumped tables
---
+ALTER TABLE `barang`
+  MODIFY `IDbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventaris`
@@ -503,27 +494,20 @@ ALTER TABLE `inventaris`
   MODIFY `IDinventaris` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=408;
 
 --
--- AUTO_INCREMENT for table `permohonan_kendaraan`
+-- AUTO_INCREMENT for table `permintaan_barang`
 --
-ALTER TABLE `permohonan_kendaraan`
-  MODIFY `IDpermohonan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `vendor`
---
-ALTER TABLE `vendor`
-  MODIFY `IDvendor` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `permintaan_barang`
+  MODIFY `IDpermintaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `permohonan_kendaraan`
+-- Constraints for table `permintaan_barang`
 --
-ALTER TABLE `permohonan_kendaraan`
-  ADD CONSTRAINT `email_permohonan_kendaraan_users` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
+ALTER TABLE `permintaan_barang`
+  ADD CONSTRAINT `IDbarang_permintaan_barang` FOREIGN KEY (`IDbarang`) REFERENCES `barang` (`IDbarang`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

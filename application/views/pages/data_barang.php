@@ -43,8 +43,8 @@
 					      <td><?php echo $p->jumlahBarang ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDbarang ?>)"><i class="fa fa-edit"></i> Edit</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDbarang ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
+					      		<button class="btn btn-sm btn-primary" onclick="edit_barang(<?php echo $p->IDbarang ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_barang(<?php echo $p->IDbarang ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>
@@ -128,56 +128,42 @@
 	      		</div>
 	      		<div class="modal-body">
 	      			<?php $attributes = array('class' => 'needs-validation', 'id'=>'editform'); ?>
-	      			<?php echo form_open_multipart('admin/edit_akun/', $attributes);?>
+	      			<?php echo form_open_multipart('barang/edit/', $attributes);?>
 					  	<div class="form-row">
-					  		<input type="email" name="thisemail" class="d-none">
+					  		<input type="number" name="editIDbarang" class="d-none">
 					    	<div class="form-group col-md-12">
-					      		<label for="editnama">Nama Lengkap</label>
+					      		<label for="editnama">Nama Barang</label>
 					      		<div class="input-group">
-					      			<input type="text" class="form-control" id="editnama" name="editnama" placeholder="Nama Lengkap" required>
+					      			<input type="text" class="form-control" id="editnama" name="editnamaBarang" placeholder="Nama Barang" required>
 					      			<div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-user"></i></span>
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-cube"></i></span>
 									</div>
 					      		</div>
-					      		<div class="invalid-feedback">Anda harus mengisi Nama Lengkap</div>
+					      		<div class="invalid-feedback">Anda harus mengisi Nama Barang</div>
 					    	</div>
 					  	</div>
 					  	<div class="form-row">
-					  		<div class="form-group col-md-12">
-					  			<label for="editemail">Email</label>
+					  		<div class="form-group col-md-6">
+					  			<label for="editemail">Tipe Barang</label>
 					  			<div class="input-group">
-								    <input type="editemail" class="form-control" id="editemail" name="editemail" placeholder="Email" required>
+								    <input type="text" class="form-control" id="editemail" name="edittipeBarang" placeholder="Tipe Barang" list="tipe" required>
+								    <?php $tipe = $this->home_model->get_barang_column('tipeBarang') ?>
+								    <datalist id="tipe">
+								    	<?php foreach ($tipe as $t): ?>
+								    		<option value="<?php echo $t->tipeBarang ?>"><?php echo $t->tipeBarang ?></option>
+								    	<?php endforeach ?>
+								    </datalist>
 								    <div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-envelope-o"></i></span>
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-tag"></i></span>
 									</div>
 					  			</div>
-							    <div class="invalid-feedback">Format Email tidak benar</div>
 							</div>
-					  		<div class="form-group col-md-12">
-					  			<label for="editpassword">Password</label>
+					  		<div class="form-group col-md-6">
+					  			<label for="editpassword">Jumlah</label>
 					  			<div class="input-group">
-					  				<input type="password" class="form-control" id="editpassword" name="editpassword" placeholder="Password" minlength="6" required>
-								    <div class="input-group-append">
-								        <span class="input-group-text"><span class="fa fa-lock"></span></span>
-								    </div>
+					  				<input type="number" class="form-control" id="editpassword" name="editjumlahBarang" placeholder="Jumlah" min="1" required>
 					  			</div>
-							    <div class="invalid-feedback">Anda harus mengisi Password</div>
 							</div>
-							<div class="form-group col-md-6">
-					      		<label for="editposisi">Posisi</label>
-					      		<input type="text" id="editposisi" name="editposisi" class="form-control" placeholder="Posisi" required/>
-					      		<div class="invalid-feedback">Anda harus mengisi Posisi</div>
-					    	</div>
-							<div class="form-group col-md-6">
-						    	<label for="editlevel">Level</label>
-						    	<select name="editlevel" id="editlevel" class="form-control">
-						    		<option selected disabled>Pilih</option>
-						    		<option value="1">User</option>
-						    		<option value="2">Supervisor</option>
-						    		<option value="3">Admin</option>
-						    	</select>
-						    	<div class="invalid-feedback">Anda harus memilih Level</div>
-						  	</div>
 					  	</div>
 					  	<button type="submit" class="btn btn-lg btn-block btn-primary">Edit</button>
 					</form>
@@ -189,31 +175,31 @@
 </div>
 <script>
 
-    function edit_akun(email){
+    function edit_barang(id){
         $('#editform')[0].reset();
 
         $.ajax({
-            url : "<?php echo site_url('admin/data_akun/')?>" + email,
+            url : "<?php echo site_url('barang/data/')?>" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {
-            	$('[name="thisemail"]').val(data.email);
-            	$('[name="editnama"]').val(data.nama);
-                $('[name="editemail"]').val(data.email);
-                $('[name="editposisi"]').val(data.posisi);
-                $('[name="editlevel"]').val(data.level);
+            	$('[name="editIDbarang"]').val(data.IDbarang);
+            	$('[name="editnamaBarang"]').val(data.namaBarang);
+                $('[name="edittipeBarang"]').val(data.tipeBarang);
+                $('[name="editjumlahBarang"]').val(data.jumlahBarang);
                 $('#editModalCenter').modal('show');
 
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+            	console.error(textStatus);
                 console.log('failed get data');
             }
         });
     }
 
-    function hapus_akun(email) {
+    function hapus_barang(id) {
     	const swalWithBootstrapButtons = swal.mixin({
 		  confirmButtonClass: 'btn btn-danger mx-2',
 		  cancelButtonClass: 'btn btn-primary mx-2',
@@ -231,7 +217,7 @@
 		  reverseButtons: true
 		}).then((result) => {
 		  if (result.value) {
-		    window.location = '<?php echo base_url() ?>admin/hapus_akun/'+email;
+		    window.location = '<?php echo base_url() ?>barang/hapus/'+id;
 		  } else if (
 		    // Read more about handling dismissals
 		    result.dismiss === swal.DismissReason.cancel

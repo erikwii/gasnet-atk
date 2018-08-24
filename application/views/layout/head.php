@@ -10,16 +10,23 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <link rel="shortcut icon" href="<?php echo base_url('assets/img/gasnet.png')?>"/>
-	<title><?php echo $title ?></title>
     <meta name="description" content="Sistem informasi Alat Tulis Kantor Gasnet PGASCOM">
 
-    <!-- font awesome -->
+    <link rel="shortcut icon" href="<?php echo base_url('assets/img/gasnet.png')?>"/>
+
+	<title><?php echo $title ?></title>
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
+    <!-- Google Material Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Knewave" rel="stylesheet">
+    
+    <!-- CSS package -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/css/jquery.dataTables.css"> -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/dataTables.min.css">
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css">
@@ -28,7 +35,8 @@
 
     <!-- development version, includes helpful console warnings -->
     <script src="<?php echo base_url()?>assets/js/polyfill.min.js"></script>
-
+    
+    <!-- Bootstrap JS -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/popper.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/bootstrap.min.js"></script>
@@ -46,7 +54,7 @@
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dataTables.bootstrap.js"></script>
     <!-- DataTables plugin end -->
     
-    <!-- Other lugin start -->
+    <!-- Other plugin start -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/clockpicker.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/bootstrap-datepicker.js"></script>
@@ -92,6 +100,10 @@
 
         .login {
             margin-top: 100px !important;
+        }
+
+        .pacifico {
+            font-family: 'Knewave', cursive;
         }
     </style>
 </head>

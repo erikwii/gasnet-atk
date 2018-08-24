@@ -23,6 +23,12 @@ class Barang extends CI_Controller {
         $this->load->view('layout/wrapper',$data);
 	}
 
+	public function data($id)
+	{
+		$data = $this->home_model->get_barang_where(array('IDbarang' => $id));
+		echo json_encode($data);
+	}
+
 	public function akun()
 	{
 		$data = array(
@@ -35,12 +41,6 @@ class Barang extends CI_Controller {
             'nav_active' => 'akun'
         );
         $this->load->view('layout/wrapper',$data);
-	}
-
-	public function data($email)
-	{
-		$data = $this->home_model->get_barang(array('email' => $email));
-		echo json_encode($data);
 	}
 
 	public function tambah()
@@ -62,41 +62,26 @@ class Barang extends CI_Controller {
 		redirect(base_url()."barang");
 	}
 
-	public function edit_akun()
+	public function edit()
 	{
 		$this->auth();
 
-		$email = $this->input->post('thisemail'); 
-		$nama = $this->input->post('editnama');
-		$editemail = $this->input->post('editemail');
-		$password = $this->input->post('editpassword');
-		$posisi = $this->input->post('editposisi');
-		$level = $this->input->post('editlevel');
+		$IDbarang = $this->input->post('editIDbarang');
+		$namaBarang = $this->input->post('editnamaBarang');
+		$tipeBarang = $this->input->post('edittipeBarang');
+		$jumlahBarang = $this->input->post('editjumlahBarang');
 
 		$data = array(
-			'nama' => $nama,
-			'password'	=> password_hash($password, PASSWORD_DEFAULT),
-			'posisi' => $posisi,
-			'level' => $level,
-			'status' => 'aktif',
+			'namaBarang' => $namaBarang,
+			'tipeBarang' => $tipeBarang,
+			'jumlahBarang'	=> $jumlahBarang
 		);
-
-		if ($editemail != $email) {
-			$data['email'] = $editemail;
-
-			$check = $this->home_model->is_UserExist($editemail);
-			if ($check > 0) {
-				$_SESSION['error'] = $editemail." telah digunakan! Silahkan gunakan email lain";
-				redirect(base_url()."admin/akun/");
-			}
-		}
-
 		$this->db->set($data);
-		$this->db->where('email',$email);
-		$this->db->update('users');
+		$this->db->where('IDbarang', $IDbarang);
+		$this->db->update('barang');
 
-		$_SESSION['success'] = ['Berhasil!','Akun '.$nama.' berhasil diupdate :)'];
-		redirect(base_url()."admin/akun");
+		$_SESSION['success'] = ['Berhasil!',$namaBarang.' berhasil diupdate :)'];
+		redirect(base_url()."barang");
 	}
 
 	public function hapus_akun($email)
