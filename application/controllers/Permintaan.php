@@ -36,6 +36,12 @@ class Permintaan extends CI_Controller {
         $this->load->view('layout/wrapper',$data);
 	}
 
+	public function data_permintaan($id)
+	{
+		$data = $this->admin_model->get_permintaan_data(array('IDpermintaan' => $id));
+		echo json_encode($data);
+	}
+
 	public function tambah()
 	{
 		$this->auth();
@@ -98,19 +104,14 @@ class Permintaan extends CI_Controller {
 		redirect(base_url().'permohonan/data/');
 	}
 
-	public function hapus_permohonan($id)
+	public function hapus($id)
 	{	
 		$this->auth();
 
-		if (!isset($_SESSION['atk_email']) || !isset($_SESSION['go_password'])) {
-			$_SESSION['login_error'] = 'Anda belum melakukan login';
-			redirect(base_url());
-		}
+		$this->db->delete('permintaan_barang', array('IDpermintaan' => $id));
 
-		$this->db->delete('permohonan_kendaraan', array('IDpermohonan' => $id));
-
-		$_SESSION['success'] = ['Berhasil Dihapus!','Anda berhasil menghapus data permohonan!'];
-		redirect(base_url()."permohonan/data");
+		$_SESSION['success'] = ['Berhasil Dihapus!','Anda berhasil menghapus data permintaan!'];
+		redirect(base_url()."permintaan/data");
 	}
 
 	public function cetakform($id)

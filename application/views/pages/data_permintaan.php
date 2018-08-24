@@ -48,8 +48,8 @@
 					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permohonan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
-					      		<button class="btn btn-sm btn-danger" onclick='hapus_permohonan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
+					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permintaan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-danger" onclick='hapus_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-trash-o"></i> Hapus</button>
 					      	</div>
 					      </td>
 					    </tr>
@@ -66,7 +66,7 @@
 	  	<div class="modal-dialog modal-dialog-centered" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title" id="exampleModalCenterTitle">Edit Permohonan <span id="tgledit"></span></h5>
+	        		<h5 class="modal-title" id="exampleModalCenterTitle">Edit Permintaan <span id="tgledit"></span></h5>
 	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          			<span aria-hidden="true">&times;</span>
 	        		</button>
@@ -75,85 +75,38 @@
 	      			<?php $attributes = array('class' => 'needs-validation', 'id'=>'editform'); ?>
 	      			<?php echo form_open_multipart('permintaan/edit/', $attributes);?>
 					  	<div class="form-row">
-					  		<input type="number" name="IDpermohonan" class="d-none">
-					    	<div class="form-group col-md-5">
-					      		<label for="edittanggalBerangkat">Tgl. Keberangkatan</label>
+					  		<input type="number" name="IDpermintaan" class="d-none">
+					    	<div class="form-group col-md-12">
+					      		<label for="tanggalBerangkat">Nama Karyawan</label>
 					      		<div class="input-group">
-					      			<input type="text" class="form-control datepicker" id="edittanggalBerangkat" name="edittanggalBerangkat" placeholder="Tgl. Keberangkatan" required>
+					      			<input type="text" class="form-control" id="tanggalBerangkat" name="namaKaryawan" placeholder="Nama Karyawan" list="karyawan" required>
+					      			<?php $karyawan = $this->admin_model->get_permintaan_column('namaKaryawan') ?>
+					      			<datalist id="karyawan">
+					      				<?php foreach ($karyawan as $k): ?>
+					      					<option value="<?php echo $k->namaKaryawan ?>"><?php echo $k->namaKaryawan ?></option>
+					      				<?php endforeach ?>
+					      			</datalist>
 					      			<div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-user"></i></span>
 									</div>
 					      		</div>
-					      		<div class="invalid-feedback">Anda harus mengisi Tanggal Keberangkatan</div>
 					    	</div>
-					    	<div class="form-group col-md-7">
-					      		<label for="editnamaPengguna">Nama Pengguna</label>
-					      		<input id="editnamaPengguna" name="editnamaPengguna" class="form-control" placeholder="Nama Pengguna" required/>
-					      		<div class="invalid-feedback">Anda harus mengisi Nama Pengguna</div>
+					    	<div class="form-group col-md-6">
+					      		<label for="IDbarang">Nama Barang</label>
+					      		<select name="IDbarang" id="IDbarang" class="form-control" required>
+					      			<option selected disabled>Pilih Barang</option>
+					      			<?php $barang = $this->home_model->get_barang() ?>
+					      			<?php foreach ($barang as $b): ?>
+					      				<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?>"><?php echo $b->namaBarang ?></option>
+					      			<?php endforeach ?>
+					      		</select>
 					    	</div>
-					  	</div>
-					  	<div class="form-row">
-					  		<div class="form-group col-md-4" id="editberangkat">
-					  			<label for="editjamBerangkat">Jam Berangkat</label>
-					  			<div class="input-group">
-								    <input type="text" class="form-control" id="editjamBerangkat" name="editjamBerangkat" placeholder="Berangkat" required>
-								    <div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-clock-o"></i></span>
-									</div>
-					  			</div>
-							    <div class="invalid-feedback">Anda harus mengisi Jam Berangkat</div>
-							</div>
-					  		<div class="form-group col-md-4" id="editkembali">
-					  			<label for="editjamKembali">Jam Kembali</label>
-					  			<div class="input-group">
-					  				<input type="text" class="form-control" id="editjamKembali" value="" name="editjamKembali" placeholder="Kembali" required>
-								    <div class="input-group-append">
-								        <span class="input-group-text"><span class="fa fa-clock-o"></span></span>
-								    </div>
-					  			</div>
-							    <div class="invalid-feedback">Anda harus mengisi Jam Kembali</div>
-							</div>
-							<div class="form-group col-md-4">
-						    	<label for="editnoPol">No. Polisi</label>
-						    	<input type="text" class="form-control" id="editnoPol" name="editnoPol" placeholder='ex: "B 1234 CD"'  />
-						    	<div class="invalid-feedback">Anda harus mengisi Tujuan</div>
-						  	</div>
-					  	</div>
-					  	<div class="form-row">
-					  		<div class="form-group col-md-6">
-						    	<label for="editsatuanKerja">Satuan Kerja</label>
-						    	<input type="text" class="form-control" id="editsatuanKerja" name="editsatuanKerja" list="satuan" placeholder="Satuan Kerja" required />
-						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="editpengemudi">Nama Pengemudi</label>
-						    	<input type="text" class="form-control" id="editpengemudi" name="editpengemudi" placeholder="Nama Pengemudi"  />
-						    	<div class="invalid-feedback">Anda harus mengisi Satuan Kerja</div>
-						  	</div>
-						<?php if ($_SESSION['atk_level'] == 0 || $_SESSION['atk_level'] == 3): ?>
-						  	<div class="form-group col-md-3">
-						    	<label for="editkmAwal">KM Awal</label>
-						    	<input type="number" class="form-control" id="editkmAwal" name="editkmAwal" list="satuan" placeholder="KM Awal"  />
-						  	</div>
-						  	<div class="form-group col-md-3">
-						    	<label for="editkmAkhir">KM Akhir</label>
-						    	<input type="number" class="form-control" id="editkmAkhir" name="editkmAkhir" placeholder="KM Akhir"/>
-						  	</div>
-						  	<div class="form-group col-md-6">
-						    	<label for="editpersekot">Persekot</label>
-						    	<div class="input-group">
-							    	<div class="input-group-prepend">
-								        <span class="input-group-text">Rp.</span>
-								    </div>
-							    	<input type="number" class="form-control" id="editpersekot" name="editpersekot" placeholder="Persekot"/>
-						    	</div>
-						  	</div>
-						<?php endif ?>
-					  	</div>
-					  	<div class="form-group">
-					  		<label for="edittujuan">Tujuan</label>
-					    	<textarea class="form-control" id="edittujuan" name="edittujuan" placeholder="Lokasi Tujuan" required></textarea>
-					    	<div class="invalid-feedback">Anda harus menyertakan lokasi</div>
+					    	<div class="form-group col-md-6">
+					      		<label for="jumlah">Jumlah</label>
+					      		<div class="input-group">
+					      			<input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah" required>
+					      		</div>
+					    	</div>
 					  	</div>
 					  	<button type="submit" class="btn btn-primary">Edit</button>
 					</form>
@@ -312,101 +265,32 @@
 		return arrdate[2]+" "+bulan[arrdate[1]]+" "+arrdate[0];
 	}
 
-	function tindak_lanjut_permohonan(id) {
-		$('#TDform')[0].reset();
-
-        $.ajax({
-            url : "<?php echo site_url('admin/data_permohonan/')?>/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-            	data[0].tanggalPermohonan
-
-                $('[name="TDIDpermohonan"]').val(data[0].IDpermohonan);
-                $('[name="TDnoPol"]').val(data[0].noPol);
-                $('[name="TDpengemudi"]').val(data[0].pengemudi);
-                $('[name="TDkmAwal"]').val(data[0].kmAwal);
-                $('[name="TDkmAkhir"]').val(data[0].kmAkhir);
-                $('[name="TDpersekot"]').val(data[0].persekot);
-                $('#TDModalCenter').modal('show');
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                console.log('failed get data');
-            }
-        });
-	}
-
-    function edit_permohonan(id){
+    function edit_permintaan(id){
         $('#editform')[0].reset();
 
         $.ajax({
-            url : "<?php echo site_url('admin/data_permohonan/')?>/" + id,
+            url : "<?php echo site_url('permintaan/data_permintaan/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {
-            	data[0].tanggalPermohonan
-
-                $('[name="IDpermohonan"]').val(data[0].IDpermohonan);
-                $('[name="edittanggalBerangkat"]').val(data[0].tanggalBerangkat);
-                $('[name="editnamaPengguna"]').val(data[0].namaPengguna);
-                $('[name="editsatuanKerja"]').val(data[0].satuanKerja);
-                $('[name="edittujuan"]').val(data[0].tujuan);
-                $('[name="editjamBerangkat"]').val(data[0].jamBerangkat);
-                $('#editjamKembali').val(data[0].jamKembali);
-                $('[name="editkmAwal"]').val(data[0].kmAwal);
-                $('[name="editkmAkhir"]').val(data[0].kmAkhir);
-                $('[name="editnoPol"]').val(data[0].noPol);
-                $('[name="editpengemudi"]').val(data[0].pengemudi);
-                $('#tgledit').text(read_date(data[0].tanggalPermohonan));
+            	// console.table(data);
+                $('[name="IDpermintaan"]').val(data.IDpermintaan);
+                $('[name="namaKaryawan"]').val(data.namaKaryawan);
+                $('[name="jumlah"]').val(data.jumlah);
+                $('[name="IDbarang"]').val(data.IDbarang);
                 $('#editModalCenter').modal('show');
 
             },
             error: function (jqXHR, textStatus, errorThrown)
-            {
+            {	
+            	console.error(textStatus);
                 console.log('failed get data');
             }
         });
     }
 
-    function lihat_permohonan(id){
-        $('#lihatform')[0].reset();
-
-        $.ajax({
-            url : "<?php echo site_url('admin/data_permohonan/')?>/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-                $('[name="lihattanggalBerangkat"]').val(read_date(data[0].tanggalBerangkat));
-                $('[name="lihatnamaPengguna"]').val(data[0].namaPengguna);
-                $('[name="lihatsatuanKerja"]').val(data[0].satuanKerja);
-                $('[name="lihattujuan"]').val(data[0].tujuan);
-                $('#lihatjamKembali').val(data[0].jamKembali);
-                $('[name="lihatjamBerangkat"]').val(data[0].jamBerangkat);
-                $('[name="lihatnoPol"]').val(data[0].noPol);
-                $('[name="lihatpengemudi"]').val(data[0].pengemudi);
-                $('[name="lihatnama"]').val(data[0].nama);
-                $('[name="lihatkmAwal"]').val(data[0].kmAwal);
-                $('[name="lihatkmAkhir"]').val(data[0].kmAkhir);
-                $('[name="lihatpersekot"]').val(data[0].persekot);
-                $('#tgldata').text(read_date(data[0].tanggalPermohonan));
-                var wow = $("#lihatpersekot").val();
-                wow = parseInt(wow).toLocaleString('id');
-                $("#lihatpersekot").val(wow);
-                $('#lihatModalCenter').modal('show');
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                console.log('failed get data');
-            }
-        });
-    }
-
-    function hapus_permohonan(id) {
+    function hapus_permintaan(id) {
     	const swalWithBootstrapButtons = swal.mixin({
 		  	confirmButtonClass: 'btn btn-danger mx-2',
 		  	cancelButtonClass: 'btn btn-primary mx-2',
@@ -424,7 +308,7 @@
 		  	reverseButtons: true
 		}).then((result) => {
 		  	if (result.value) {
-		    	window.location = '<?php echo base_url() ?>permintaan/hapus_permohonan/'+id;
+		    	window.location = '<?php echo base_url() ?>permintaan/hapus/'+id;
 		  	} else if (
 		    	// Read more about handling dismissals
 		    	result.dismiss === swal.DismissReason.cancel
