@@ -92,45 +92,4 @@ class Home extends CI_Controller {
             redirect(base_url()."permintaan/");
         }
     }
-
-    // function for convert month number to romawi
-    public function bulan_to_romawi($val)
-    {
-    	$romawi = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
-    	return $romawi[$val+1];
-    }
-
-    // dummy function for sending email
-    public function send_mail($email)
-    {
-        $config = Array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'gasnet.dummy@gmail.com',
-            'smtp_pass' => 'passwordgasnet',
-            'mailtype'  => 'html', 
-            'charset'   => 'iso-8859-1'
-        );
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-
-        $this->email->from('gasnet.dummy@gmail.com', 'DoNotReply');
-        $this->email->to($email);
-
-        $this->email->subject('Email Test');
-        $this->email->message('Cobain euy');
-
-        if ($this->email->send()) {
-            echo "success";
-        }else{
-            echo $this->email->print_debugger();
-        }
-    }
-
-    // dummy function for cek view of email body
-    public function cekemail()
-    {
-        $this->load->view('pages/email');
-    }
 }

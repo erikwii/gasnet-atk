@@ -56,7 +56,11 @@
 					      			<option selected disabled>Pilih Barang</option>
 					      			<?php $barang = $this->home_model->get_barang() ?>
 					      			<?php foreach ($barang as $b): ?>
-					      				<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?>"><?php echo $b->namaBarang ?></option>
+					      				<?php if ($b->jumlahBarang < 1): ?>
+					      					<option disabled value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
+					      				<?php else: ?>
+					      					<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
+					      				<?php endif ?>
 					      			<?php endforeach ?>
 					      		</select>
 					    	</div>

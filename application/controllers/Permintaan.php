@@ -170,7 +170,7 @@ class Permintaan extends CI_Controller {
 	public function auth()
 	{
 		if (!isset($_SESSION['atk_email'])) {
-			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin'.$_SESSION['atk_level'];
+			$_SESSION['login_error'] = 'Anda belum melakukan login ke halaman Admin';
 			redirect(base_url());
 		}
 	}
