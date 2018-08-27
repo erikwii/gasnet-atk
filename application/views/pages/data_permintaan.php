@@ -26,7 +26,7 @@
 				  <thead>
 				    <tr>
 				      <th scope="col">No</th>
-				      <th scope="col">Tanggal</th>
+				      <th scope="col">Hari/Tanggal</th>
 				      <th scope="col">Nama Karyawan</th>
 				      <th scope="col">Nama Barang</th>
 				      <th scope="col">Jumlah</th>

@@ -14,7 +14,7 @@ class Barang extends CI_Controller {
 		$this->auth();
 
 		$data = array(
-            'title'=> 'Gasnet ATK! - Data ATK',
+            'title'=> 'Gasnet ATK! - Data barang ATK',
             'nav' => 'nav.php',
             'isi' => 'pages/data_barang',
             'barang' => $this->home_model->get_barang(),

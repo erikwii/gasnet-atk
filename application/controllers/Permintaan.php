@@ -12,7 +12,7 @@ class Permintaan extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-            'title'=> 'Gasnet ATK - Permintaan ATK',
+            'title'=> 'Gasnet ATK - Form Permintaan ATK',
             'nav' => 'nav.php',
             'isi' => 'pages/permintaan',
             'nav_active' => 'permintaan'
@@ -25,7 +25,7 @@ class Permintaan extends CI_Controller {
 		$this->auth();
 
 		$data = array(
-            'title'=> 'GasnetGo! - Permohonan Kendaraan Operasional',
+            'title'=> 'Gasnet ATK - Data Permintaan ATK',
             'nav' => 'nav.php',
             'isi' => 'pages/data_permintaan',
             'permintaan' => $this->admin_model->get_permintaan(),
