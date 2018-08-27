@@ -263,10 +263,12 @@
 				order: [[0, "asc"]],
 				buttons: [
 		            {
+		            	text: 'Export Excel',
 		                extend: 'excelHtml5',
 		                exportOptions: {
 		                    columns: [0,1,2,3]
-		                }
+		                },
+		                className: 'btn btn-success'
 		            }
 		        ]
 			});
