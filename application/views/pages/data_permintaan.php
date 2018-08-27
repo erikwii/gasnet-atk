@@ -48,8 +48,8 @@
 					      <td><?php echo $p->jumlah ?></td>
 					      <td>
 					      	<div class="btn-group">
-					      		<button class="btn btn-sm btn-outline-primary" onclick="edit_permintaan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
-					      		<button class="btn btn-sm btn-success" onclick='batalkan_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-refresh"></i> Batalkan</button>
+					      		<button class="btn btn-sm btn-primary" onclick="edit_permintaan(<?php echo $p->IDpermintaan ?>)"><i class="fa fa-edit"></i> Edit</button>
+					      		<button class="btn btn-sm btn-outline-primary" onclick='batalkan_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="fa fa-refresh"></i> Batalkan</button>
 					      		<button class="btn btn-sm btn-danger align-middle d-inline-flex" onclick='hapus_permintaan(<?php echo $p->IDpermintaan ?>)'><i class="material-icons">delete_outline</i> Hapus</button>
 					      	</div>
 					      </td>
@@ -92,17 +92,22 @@
 									</div>
 					      		</div>
 					    	</div>
-					    	<div class="form-group col-md-6">
+					    	<div class="form-group col-md-8">
 					      		<label for="IDbarang">Nama Barang</label>
-					      		<select name="IDbarang" id="IDbarang" class="form-control" required>
-					      			<option selected disabled>Pilih Barang</option>
-					      			<?php $barang = $this->home_model->get_barang() ?>
-					      			<?php foreach ($barang as $b): ?>
-					      				<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?>"><?php echo $b->namaBarang ?></option>
-					      			<?php endforeach ?>
-					      		</select>
+					      		<div class="input-group">
+						      		<select name="IDbarang" id="IDbarang" class="form-control" required>
+						      			<option selected disabled>Pilih Barang</option>
+						      			<?php $barang = $this->home_model->get_barang() ?>
+						      			<?php foreach ($barang as $b): ?>
+						      				<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?>"><?php echo $b->namaBarang ?></option>
+						      			<?php endforeach ?>
+						      		</select>
+						      		<div class="input-group-append">
+									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-cube"></i></span>
+									</div>
+					      		</div>
 					    	</div>
-					    	<div class="form-group col-md-6">
+					    	<div class="form-group col-md-4">
 					      		<label for="jumlah">Jumlah</label>
 					      		<div class="input-group">
 					      			<input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah" required>

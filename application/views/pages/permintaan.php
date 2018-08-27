@@ -49,25 +49,30 @@
 					      				<?php endforeach ?>
 					      			</datalist>
 					      			<div class="input-group-append">
-									    <span class="input-group-text" id="basic-addon2"><i class="fa fa-user"></i></span>
+									    <span class="input-group-text bg-white text-primary" id="basic-addon2"><i class="fa fa-user"></i></span>
 									</div>
 					      		</div>
 					    	</div>
-					    	<div class="form-group col-md-6">
+					    	<div class="form-group col-md-8">
 					      		<label for="IDbarang">Nama Barang</label>
-					      		<select name="IDbarang" id="IDbarang" class="form-control" required>
-					      			<option selected disabled>Pilih Barang</option>
-					      			<?php $barang = $this->home_model->get_barang() ?>
-					      			<?php foreach ($barang as $b): ?>
-					      				<?php if ($b->jumlahBarang < 1): ?>
-					      					<option disabled value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
-					      				<?php else: ?>
-					      					<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
-					      				<?php endif ?>
-					      			<?php endforeach ?>
-					      		</select>
+					      		<div class="input-group">
+						      		<select name="IDbarang" id="IDbarang" class="form-control" required>
+						      			<option selected disabled>Pilih Barang</option>
+						      			<?php $barang = $this->home_model->get_barang() ?>
+						      			<?php foreach ($barang as $b): ?>
+						      				<?php if ($b->jumlahBarang < 1): ?>
+						      					<option disabled value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
+						      				<?php else: ?>
+						      					<option value="<?php echo $b->IDbarang ?>" title="<?php echo $b->jumlahBarang ?> buah"><?php echo $b->namaBarang ?></option>
+						      				<?php endif ?>
+						      			<?php endforeach ?>
+						      		</select>
+						      		<div class="input-group-append">
+									    <span class="input-group-text bg-white text-primary" id="basic-addon2"><i class="fa fa-cube"></i></span>
+									</div>
+					      		</div>
 					    	</div>
-					    	<div class="form-group col-md-6">
+					    	<div class="form-group col-md-4">
 					      		<label for="jumlah">Jumlah</label>
 					      		<div class="input-group">
 					      			<input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah" required>

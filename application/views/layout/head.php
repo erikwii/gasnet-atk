@@ -99,7 +99,7 @@
         }
 
         .login {
-            margin-top: 100px !important;
+            margin-top: 90px !important;
         }
 
         .pacifico {
