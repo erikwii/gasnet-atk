@@ -167,6 +167,7 @@ class Permintaan extends CI_Controller {
 		redirect(base_url()."permintaan/data");
 	}
 
+	// autentication function [checking session]
 	public function auth()
 	{
 		if (!isset($_SESSION['atk_email'])) {
